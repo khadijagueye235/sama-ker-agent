@@ -1,4 +1,4 @@
-mcp[cli]
+mcp[cli]>=1.20,<2
 langgraph
 langchain-mcp-adapters
 langchain-groq
