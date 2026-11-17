@@ -6,7 +6,8 @@
 |---|---|---|
 | `demandes_ex1.json` | 10 demandes courtes et la liste **exacte** des biens à citer | Ex 1 (critère d'acceptation), Ex 2 (mêmes résultats via MCP) |
 | `emails_test.json` | 15 emails complets avec le résultat attendu | Ex 4 (emails de test), Ex 6 (jeu d'évaluation) |
-| `run_eval.py` | script qui rejoue le jeu et produit le tableau de résultats | Ex 6 |
+| `run_eval.py` | script qui rejoue les deux jeux et produit le tableau de résultats | Ex 1, Ex 6 |
+| `agent_oracle.py`, `agent_naif.py` | agents factices qui servent uniquement à tester `run_eval.py` | — |
 | `results/` | tableaux de résultats avant / après correction | Ex 6 |
 
 Les attendus ont été vérifiés contre le catalogue généré par `mcp_server/create_db.py`.
@@ -42,7 +43,7 @@ Si le catalogue change, ils doivent être revérifiés.
 }
 ```
 
-### Règles de notation (à appliquer par `run_eval.py`)
+### Règles de notation (appliquées par `run_eval.py`)
 
 Un cas est **réussi** si toutes les conditions suivantes sont vraies :
 
@@ -67,7 +68,54 @@ le jeu, pour que les cas de créneau soient reproductibles :
 
 - **FIX-01** : le samedi suivant, de 10 h à 12 h, tous les conseillers sont occupés (utilisé par E07).
 
-`run_eval.py` doit créer ces événements au début et les supprimer à la fin.
+`run_eval.py` crée ces événements au début (marqués `source=sama-ker-eval`) et les supprime à la fin,
+même si l'évaluation plante.
+
+## Lancer l'évaluation
+
+```bash
+python -m eval.run_eval --label avant                  # agent de l'équipe (module agent.main), avec Google
+python -m eval.run_eval --label apres --pause 5        # après correction ; pause entre deux cas (limites Groq)
+python -m eval.run_eval --cas E07,E13 --label essai    # quelques cas seulement
+python -m eval.run_eval --jeu ex1                      # critère de l'exercice 1 seulement (10 demandes)
+python -m eval.run_eval --hors-ligne                   # sans Google : créneaux non vérifiés dans l'agenda
+```
+
+Le rapport est écrit dans `eval/results/<label>_<date>.md` (tableau lisible) et `.json` (détail,
+brouillons compris). Les rapports `avant` et `apres` sont à commiter pour l'exercice 6.
+
+**Pendant l'évaluation, aucune écriture n'est possible** : la fonction de validation fournie à
+l'agent enregistre chaque demande puis **refuse**. En mode connecté, le script vérifie en plus,
+après chaque cas, qu'aucune visite n'a été créée et qu'aucun email n'a été envoyé.
+
+### Ce que l'agent doit fournir (contrat pour `agent/main.py`)
+
+```python
+def traiter_email(email: dict, demander) -> dict:
+    """email = {"id", "expediteur", "objet", "corps"}.
+    demander = fonction de validation à passer à outils_langgraph(..., demander=demander)
+    (ou à utiliser pour reprendre après interrupt()) : TOUTE écriture doit passer par elle."""
+    return {
+        "decision": "repondre",              # ou "demander_precisions", "transmettre"
+        "brouillon": "Bonjour Awa, ...",     # texte proposé au conseiller ("" si transmis)
+        "biens_proposes": ["SK-001", "SK-003"],                 # facultatif (sinon repérés dans le brouillon)
+        "creneaux": ["2026-11-19T16:00:00+00:00", "..."],       # créneaux proposés au client (ISO 8601)
+    }
+
+def repondre_demande(texte: str) -> str:
+    """Exercice 1 : réponse en texte libre à une demande courte."""
+```
+
+Le plus simple est de construire `biens_proposes` et `creneaux` à partir des **résultats des
+outils** appelés pendant l'exécution (messages `ToolMessage` de `rechercher_biens`,
+`detail_bien` et `lister_creneaux_libres`) plutôt que de les extraire du texte.
+
+### Vérifier le script lui-même
+
+```bash
+python -m eval.run_eval --agent eval.agent_oracle --label test-oracle   # attendu : 15/15 et 10/10
+python -m eval.run_eval --agent eval.agent_naif --hors-ligne --label test-naif   # attendu : 0/15 et 0/10
+```
 
 ## Utilisation pour l'exercice 4
 

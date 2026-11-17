@@ -202,7 +202,8 @@ flowchart TB
 | **Ex4** · Gmail | 15 | lecture, brouillons dans le fil, libellés, envoi validé, anti-injection | B | 🔄 en cours (guide et code de départ testés) |
 | **Ex5** · Agent complet | 25 | graphe complet, `interrupt()`, reprise, traces | C | ⏳ à venir |
 | **Ex6** · Évaluation | 10 | 15 emails + 10 demandes avec attendus | A | ✅ données prêtes |
-| | | script `run_eval.py`, résultats avant / après | A · C | ⏳ à venir |
+| | | script `run_eval.py` (notation automatique, fixture d'agenda, contrôle des écritures) | A | ✅ terminé |
+| | | résultats avant / après correction | A · C | ⏳ à venir (attend l'agent) |
 | **Qualité** | 10 | README, code, démo | équipe | 🔄 en continu |
 
 ### Ce qui a été fait, étape par étape
@@ -536,7 +537,7 @@ outils = outils_langgraph(OUTILS_LECTURE, OUTILS_ECRITURE)   # écriture = inter
 |---|---|
 | [eval/demandes_ex1.json](eval/demandes_ex1.json) | 10 demandes et les biens **exacts** attendus (Ex1, Ex2) |
 | [eval/emails_test.json](eval/emails_test.json) | 15 emails complets avec le résultat attendu (Ex4, Ex6) |
-| [eval/run_eval.py](eval/run_eval.py) | rejoue le jeu et produit le tableau de résultats *(à venir)* |
+| [eval/run_eval.py](eval/run_eval.py) | rejoue les deux jeux, note chaque cas et produit le tableau de résultats |
 | `eval/results/` | résultats avant / après correction |
 
 | Catégorie | Emails |
