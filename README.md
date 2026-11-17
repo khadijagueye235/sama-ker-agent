@@ -140,6 +140,62 @@ client = MultiServerMCPClient({
 tools = await client.get_tools()   # -> rechercher_biens, detail_bien
 ```
 
+**Depuis un client MCP configuré en JSON** (voir plus bas) :
+
+## Accès Google (OAuth) et agenda des conseillers
+
+### Configuration (une seule fois)
+1. Compte Google **réservé à l'atelier** (aucun compte personnel).
+2. Google Cloud : projet, **Gmail API** et **Google Calendar API** activées, écran de
+   consentement en mode *Testing* avec le compte de test comme utilisateur de test,
+   identifiant OAuth de type **Desktop app** téléchargé en `credentials.json` à la racine.
+3. Google Calendar (interface web) : un agenda par conseiller ; leurs ID vont dans `.env` :
+   `CONSEILLERS=Nom:id@group.calendar.google.com,...`
+4. Première connexion (ouvre le navigateur, se connecter avec le compte de test) :
+   ```bash
+   python -m agent.google_auth
+   ```
+   Le jeton est enregistré dans `token.json`. `credentials.json`, `token.json` et `.env`
+   sont ignorés par Git.
+
+**Scopes demandés (strict nécessaire)** : `gmail.modify` (lecture, libellés, brouillons, envoi,
+sans suppression définitive) et `calendar.events` (événements uniquement : les agendas sont
+créés à la main, l'agent ne peut ni les créer, ni les supprimer, ni les partager).
+
+### Outils Calendar (`agent/tools_calendar.py`)
+
+| Outil | Type | Rôle |
+|---|---|---|
+| `lister_creneaux_libres(date_debut, date_fin?, heure_min?, heure_max?, conseiller?, nombre_max?)` | lecture | créneaux réellement libres, avec les conseillers disponibles |
+| `lister_visites(date_debut, date_fin?, client_email?)` | lecture | visites inscrites par l'agent (pour retrouver un `event_id`) |
+| `creer_visite(debut, id_bien, adresse, client_nom, client_email?, conseiller?)` | **écriture** | inscrit une visite de 45 min avec l'adresse du bien |
+| `deplacer_visite(event_id, nouveau_debut, conseiller?)` | **écriture** | crée la nouvelle visite puis annule l'ancienne |
+| `annuler_visite(event_id)` | **écriture** | annule une visite |
+
+**Règles de l'agence appliquées dans le code** : visites de 45 min, du lundi au samedi,
+de 9 h à 18 h, fuseau `Africa/Dakar`, au moins 2 h à l'avance, créneaux proposés toutes les 30 min.
+
+**Aucun doublon**, avec deux protections :
+1. le créneau est **revérifié** dans l'agenda juste avant l'écriture (`creneau_pris` sinon) ;
+2. chaque visite reçoit un **identifiant calculé** à partir de l'agenda et de l'heure :
+   si deux demandes passent la vérification en même temps, Google refuse la seconde (409 → `doublon`).
+
+**Validation humaine** (`agent/validation.py`) : les outils d'écriture ne sont jamais donnés au
+modèle directement. `outils_langgraph()` les enveloppe avec `interrupt()` : le graphe se met en
+pause et ne reprend qu'avec `Command(resume={"ok": True})`. En cas de refus, l'outil renvoie
+`refus_conseiller` et rien n'est écrit.
+
+**Démonstration du critère de l'exercice 3** :
+```bash
+python -m agent.demo_calendar          # chaque écriture est validée au clavier par le conseiller
+python -m agent.demo_calendar --auto   # validations automatiques (test rapide)
+```
+Elle propose trois créneaux pour « jeudi prochain en fin d'après-midi », crée une visite après
+validation, montre qu'une seconde demande sur le même créneau ne crée pas de doublon, qu'un refus
+n'écrit rien, puis déplace et annule la visite.
+
+## Client MCP configuré en JSON
+
 **Depuis un client MCP configuré en JSON** (Claude Desktop, Cursor…) :
 ```json
 {
