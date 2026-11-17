@@ -81,8 +81,22 @@ def main():
 
     serveur = creer_serveur(args.host, args.port)
     if args.transport == "http":
+        import uvicorn
+        from starlette.middleware.cors import CORSMiddleware
+
+        # CORS : nécessaire pour les clients qui tournent dans un navigateur
+        # (MCP Inspector en connexion directe). Sans `expose_headers`, le
+        # navigateur ne peut pas lire l'identifiant de session renvoyé à la
+        # connexion, et les requêtes suivantes (liste des outils) échouent.
+        app = CORSMiddleware(
+            serveur.streamable_http_app(),
+            allow_origins=["*"],
+            allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
+            allow_headers=["*"],
+            expose_headers=["Mcp-Session-Id"],
+        )
         print(f"Serveur MCP sur http://{args.host}:{args.port}/mcp", file=sys.stderr)
-        serveur.run(transport="streamable-http")
+        uvicorn.run(app, host=args.host, port=args.port, log_level="info")
     else:
         serveur.run(transport="stdio")
 
