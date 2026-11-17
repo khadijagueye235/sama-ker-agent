@@ -1,6 +1,7 @@
 mcp[cli]
 langgraph
 langchain-mcp-adapters
+langchain-groq
 google-api-python-client
 google-auth-oauthlib
 python-dotenv
