@@ -1,0 +1,15 @@
+{
+  "description": "Critère d'acceptation de l'exercice 1 : sur ces 10 demandes, l'agent ne cite que des biens de la base et dit clairement quand aucun bien ne correspond. biens_attendus est la liste exacte des biens à citer.",
+  "demandes": [
+    {"id": "D01", "texte": "Un F3 à Mermoz à moins de 400 000 F", "biens_attendus": ["SK-001", "SK-003"]},
+    {"id": "D02", "texte": "Un studio meublé au Point E", "biens_attendus": ["SK-002"]},
+    {"id": "D03", "texte": "Un F4 à Liberté 6", "biens_attendus": ["SK-026"]},
+    {"id": "D04", "texte": "Un F3 à Saly, budget 350 000 F", "biens_attendus": []},
+    {"id": "D05", "texte": "Une villa à 1 million maximum", "biens_attendus": ["SK-028"]},
+    {"id": "D06", "texte": "Une chambre à Ouakam", "biens_attendus": ["SK-016"]},
+    {"id": "D07", "texte": "Un F3 aux Almadies à moins de 500 000 F", "biens_attendus": []},
+    {"id": "D08", "texte": "Un F2 meublé au Plateau", "biens_attendus": ["SK-020"]},
+    {"id": "D09", "texte": "Un appartement à Yoff", "biens_attendus": ["SK-027"]},
+    {"id": "D10", "texte": "Un F3 à Sacré-Coeur pour 300 000 F maximum", "biens_attendus": ["SK-021"]}
+  ]
+}
