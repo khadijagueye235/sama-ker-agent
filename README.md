@@ -118,8 +118,16 @@ python mcp_server/test_client.py --url http://127.0.0.1:8000/mcp   # HTTP (serve
 **MCP Inspector** (interface web de test, nécessite Node.js) :
 ```bash
 npx @modelcontextprotocol/inspector .venv/Scripts/python.exe mcp_server/server.py   # stdio
-npx @modelcontextprotocol/inspector   # puis : Transport « Streamable HTTP », URL http://127.0.0.1:8000/mcp
 ```
+En HTTP (serveur lancé à part avec `--transport http`) :
+1. `npx @modelcontextprotocol/inspector`, puis ouvrir http://localhost:6274 ;
+2. **Add Servers → + Add manually** : Server ID `sama-ker-http`, Transport `streamable-http`,
+   URL `http://127.0.0.1:8000/mcp`, puis **Add** ;
+3. activer l'interrupteur de la carte `sama-ker-http` (Connected) ;
+4. onglet **Tools** en haut : `rechercher_biens` et `detail_bien` apparaissent ; onglet **Resources** : `agence://infos`.
+
+> Le serveur HTTP envoie les en-têtes CORS (dont `Access-Control-Expose-Headers: Mcp-Session-Id`)
+> nécessaires aux clients qui tournent dans un navigateur, comme l'Inspector.
 
 **Depuis un agent LangChain / LangGraph** (`langchain-mcp-adapters`) :
 ```python
