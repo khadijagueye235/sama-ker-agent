@@ -1,51 +1,308 @@
+<div align="center">
+
 # Sama Kër Immobilier · Agent de visites
 
-Programme Data & IA · Orange Digital Center
+**Un agent IA qui traite les demandes de visite reçues par email, propose des biens et des créneaux réels, et n'agit qu'après validation d'un conseiller.**
 
-Équipe : Nom 1, Nom 2, Nom 3
+Programme Data & IA · Orange Digital Center · Activité pratique « Agents IA »
 
-## Objectif
-Agent qui traite les demandes de visite reçues par Gmail, avec validation d'un conseiller avant tout envoi ou écriture dans l'agenda.
+**Équipe :** Cheikh A. T. Ciss · Khadidiatou Gueye · Rokhaya C. Diouf
 
-## Installation
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)
+![LangGraph](https://img.shields.io/badge/LangGraph-1.x-1C3C3C)
+![MCP](https://img.shields.io/badge/MCP-FastMCP%201.x-6E40C9)
+![Groq](https://img.shields.io/badge/LLM-Groq%20·%20GPT--OSS%20120B-F55036)
+![Google APIs](https://img.shields.io/badge/Google-Gmail%20%2B%20Calendar-4285F4?logo=google&logoColor=white)
 
-Prérequis : Python 3.11 ou plus récent, Git. Node.js (facultatif) pour l'inspecteur MCP.
+</div>
+
+---
+
+## Sommaire
+
+1. [Le contexte](#1-le-contexte)
+2. [Les trois règles non négociables](#2-les-trois-règles-non-négociables)
+3. [Architecture](#3-architecture)
+4. [Le parcours d'une demande](#4-le-parcours-dune-demande)
+5. [L'équipe : qui fait quoi](#5-léquipe--qui-fait-quoi)
+6. [Avancement, exercice par exercice](#6-avancement-exercice-par-exercice)
+7. [Installation](#7-installation)
+8. [Brique 1 · Catalogue et serveur MCP](#8-brique-1--catalogue-et-serveur-mcp)
+9. [Brique 2 · Google Calendar](#9-brique-2--google-calendar)
+10. [Brique 3 · Gmail](#10-brique-3--gmail)
+11. [Brique 4 · Le cerveau de l'agent (LangGraph)](#11-brique-4--le-cerveau-de-lagent-langgraph)
+12. [Évaluation](#12-évaluation)
+13. [Sécurité et confidentialité](#13-sécurité-et-confidentialité)
+14. [Structure du dépôt](#14-structure-du-dépôt)
+15. [Méthode de travail Git](#15-méthode-de-travail-git)
+
+---
+
+## 1. Le contexte
+
+**Sama Kër Immobilier** est une agence immobilière fictive de Dakar. Chaque jour, elle reçoit
+des emails du type :
+
+> « Bonjour, je cherche un F3 à Mermoz, budget 400 000 F CFA maximum. Je suis disponible jeudi
+> prochain en fin d'après-midi. »
+
+Aujourd'hui, un conseiller lit chaque email, cherche dans le catalogue, consulte les agendas,
+rédige la réponse et inscrit la visite. Notre agent automatise **tout le travail préparatoire**,
+mais laisse **la décision finale à un humain**.
+
+| L'agent fait | Le conseiller fait |
+|---|---|
+| lire les nouvelles demandes dans Gmail | relire le brouillon proposé |
+| comprendre les critères (quartier, type, pièces, budget, disponibilités) | valider ou refuser l'envoi |
+| chercher les biens **dans le catalogue** (serveur MCP) | valider ou refuser la création de la visite |
+| trouver les créneaux **réellement libres** dans les agendas | traiter les demandes hors périmètre |
+| rédiger un brouillon de réponse dans le bon fil | |
+
+---
+
+## 2. Les trois règles non négociables
+
+| # | Règle de l'agence | Comment le code la garantit |
+|---|---|---|
+| 1 | **Aucun email envoyé et aucune visite créée sans l'accord d'un conseiller** | les outils d'écriture ne sont jamais donnés au modèle tels quels : ils sont enveloppés par `avec_validation()` qui met le graphe en pause (`interrupt()`) jusqu'à la décision du conseiller ([agent/validation.py](agent/validation.py)) |
+| 2 | **Les réponses viennent du catalogue et de l'agenda, jamais de la mémoire du modèle** | le modèle n'a accès aux biens et aux créneaux que par les outils ; les outils renvoient `{"ok": false, "conseil": "N'invente pas de bien..."}` quand rien ne correspond |
+| 3 | **Les demandes hors périmètre vont à un humain** | négociation, litige, réclamation : l'agent ne répond pas sur le fond, il pose le libellé « Transmis à un conseiller » |
+
+---
+
+## 3. Architecture
+
+### Vue d'ensemble
+
+```mermaid
+flowchart LR
+    client(["Client<br/>(email)"])
+
+    subgraph google["Google · compte de test dédié"]
+        gmail[("Gmail<br/>boîte de l'agence")]
+        cal[("Google Calendar<br/>1 agenda par conseiller")]
+    end
+
+    subgraph agent["Agent (LangGraph)"]
+        llm["LLM<br/>Groq · GPT-OSS 120B"]
+        tg["Outils Gmail<br/>agent/tools_google.py"]
+        tc["Outils Calendar<br/>agent/tools_calendar.py"]
+        val{{"Validation humaine<br/>agent/validation.py"}}
+    end
+
+    subgraph mcp["Serveur MCP · mcp_server/"]
+        srv["server.py<br/>FastMCP"]
+        db[("catalogue.db<br/>SQLite · 30 biens")]
+    end
+
+    conseiller(["Conseiller"])
+
+    client -- "demande" --> gmail
+    gmail <-- "lecture · brouillon · libellés" --> tg
+    tc <-- "créneaux libres · visites" --> cal
+    llm --- tg & tc
+    llm -- "MCP (stdio ou HTTP)" --> srv
+    srv --> db
+    tg -. "envoi" .-> val
+    tc -. "création / déplacement" .-> val
+    val <-- "o / N" --> conseiller
+```
+
+Les flèches pointillées passent **obligatoirement** par la validation humaine.
+
+### Pourquoi ces choix
+
+| Choix | Raison |
+|---|---|
+| **LangGraph** | une boucle « modèle ↔ outils » explicite, et surtout `interrupt()` + checkpointer : le graphe peut se mettre en pause en attendant le conseiller, puis reprendre exactement où il s'était arrêté |
+| **MCP** pour le catalogue | le catalogue devient un service standard : notre agent, l'agent d'une autre équipe ou MCP Inspector s'y branchent sans connaître notre code |
+| **Groq · GPT-OSS 120B** | appel d'outils natif fiable et gratuit pour l'atelier ; Llama reste possible en secours (variable `GROQ_MODEL`) |
+| **SQLite** | catalogue local, données fixes et reproductibles pour l'évaluation |
+| **OAuth Desktop + scopes minimaux** | `gmail.modify` et `calendar.events` uniquement : l'agent ne peut ni supprimer définitivement un email, ni créer, supprimer ou partager un agenda |
+
+---
+
+## 4. Le parcours d'une demande
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor C as Client
+    participant G as Gmail
+    participant A as Agent (LLM)
+    participant M as Serveur MCP
+    participant K as Calendar
+    actor H as Conseiller
+
+    C->>G: « F3 à Mermoz, 400 000 max, jeudi fin d'après-midi »
+    A->>G: lire les demandes non traitées
+    A->>M: rechercher_biens(quartier="Mermoz", pieces=3, loyer_max=400000)
+    M-->>A: SK-001 (350 000), SK-003 (380 000)
+    A->>K: lister_creneaux_libres(jeudi, heure_min="16:00")
+    K-->>A: 16h00 · 16h30 · 17h00
+    A->>G: brouillon de réponse dans le fil + libellé « En attente de validation »
+    A->>H: interrupt() : « Envoyer ce brouillon ? »
+    H-->>A: oui
+    A->>G: envoi + libellé « Répondu »
+    C->>G: « Je prends jeudi 16h pour SK-001 »
+    A->>H: interrupt() : « Créer la visite ? »
+    H-->>A: oui
+    A->>K: creer_visite(SK-001, Rue MZ-12, Mermoz, 16h00)
+```
+
+### Les états d'un email dans Gmail
+
+```mermaid
+stateDiagram-v2
+    [*] --> ATraiter: nouvel email reçu
+    ATraiter --> EnAttente: brouillon rédigé
+    ATraiter --> Transmis: hors périmètre
+    EnAttente --> Repondu: conseiller valide l'envoi
+    EnAttente --> ATraiter: conseiller refuse
+    Repondu --> [*]
+    Transmis --> [*]
+
+    ATraiter: Sama Kër/À traiter
+    EnAttente: Sama Kër/En attente de validation
+    Repondu: Sama Kër/Répondu
+    Transmis: Sama Kër/Transmis à un conseiller
+```
+
+Un email déjà marqué n'est jamais traité deux fois.
+
+---
+
+## 5. L'équipe : qui fait quoi
+
+| Rôle | Membre | Responsabilités | Exercices |
+|---|---|---|---|
+| **A · Catalogue et MCP** | Cheikh A. T. Ciss | base SQLite, outils de recherche, serveur MCP, jeu d'évaluation ; a aussi réalisé l'exercice 3 pendant l'indisponibilité de B | Ex1 (étapes 1–2), Ex2, Ex3, Ex6 (données) |
+| **B · Intégrations Google** | Khadidiatou Gueye | OAuth, Gmail (lecture, brouillons, libellés, envoi validé), tests avec les vrais emails | Ex3 (reprise), Ex4 |
+| **C · Cerveau de l'agent** | Rokhaya C. Diouf | prompt système, graphe LangGraph, branchement MCP, validation humaine dans le graphe, traces | Ex1 (étapes 3–4), Ex2 (étape 3), Ex5 |
+| **Toute l'équipe** | | évaluation, corrections, démo | Ex6, qualité |
+
+```mermaid
+flowchart TB
+    A["Rôle A<br/>Catalogue · MCP · Calendar"] --> C["Rôle C<br/>Graphe LangGraph"]
+    B["Rôle B<br/>Gmail"] --> C
+    C --> E["Équipe<br/>Évaluation · démo"]
+```
+
+---
+
+## 6. Avancement, exercice par exercice
+
+| Exercice | Points | Contenu | Responsable | État |
+|---|:---:|---|---|---|
+| **Ex1** · Premier agent avec outils | 10 | catalogue + outils (étapes 1–2) | A | ✅ terminé |
+| | | boucle agent + vérification sur 10 demandes (étapes 3–4) | C | 🔄 en cours |
+| **Ex2** · Serveur MCP | 15 | serveur, outils, ressource, tests stdio et HTTP, MCP Inspector | A | ✅ terminé |
+| | | l'agent devient client MCP ; test croisé avec une autre équipe | C · équipe | 🔄 en cours |
+| **Ex3** · Google Calendar | 15 | créneaux libres, règles de l'agence, anti-doublon, validation | A (pour B) | ✅ terminé, testé sur les vrais agendas |
+| **Ex4** · Gmail | 15 | lecture, brouillons dans le fil, libellés, envoi validé, anti-injection | B | 🔄 en cours (guide et code de départ testés) |
+| **Ex5** · Agent complet | 25 | graphe complet, `interrupt()`, reprise, traces | C | ⏳ à venir |
+| **Ex6** · Évaluation | 10 | 15 emails + 10 demandes avec attendus | A | ✅ données prêtes |
+| | | script `run_eval.py`, résultats avant / après | A · C | ⏳ à venir |
+| **Qualité** | 10 | README, code, démo | équipe | 🔄 en continu |
+
+### Ce qui a été fait, étape par étape
+
+<details>
+<summary><b>Étape 1 · Catalogue SQLite (Ex1)</b> : <code>4ee045f</code></summary>
+
+- [mcp_server/create_db.py](mcp_server/create_db.py) crée `catalogue.db` : **30 biens fixes**
+  répartis sur 10 quartiers (Mermoz, Almadies, Ngor, Ouakam, Point E, Plateau, Sacré-Cœur,
+  Liberté 6, Yoff, Fann), avec contraintes SQL (`CHECK` sur le type, le loyer, les pièces).
+- Des cas pièges sont prévus : bien hors budget (SK-004), biens indisponibles (SK-005, SK-013,
+  SK-023), quartier non couvert (Saly).
+- [mcp_server/catalogue.py](mcp_server/catalogue.py) : `rechercher_biens` et `detail_bien`,
+  requêtes **paramétrées** (aucune injection SQL), recherche insensible aux accents et à la
+  casse (« sacre coeur » = « Sacré-Cœur »), erreurs renvoyées en JSON au lieu d'exceptions.
+</details>
+
+<details>
+<summary><b>Étape 2 · Serveur MCP (Ex2)</b> : <code>36daf33</code>, <code>9749611</code>, <code>7274ca9</code></summary>
+
+- [mcp_server/server.py](mcp_server/server.py) expose les deux outils (annotés lecture seule)
+  et la ressource `agence://infos` (horaires, zones, conditions, hors périmètre).
+- Deux transports : **stdio** (local) et **streamable HTTP** (`/mcp`), avec en-têtes CORS pour
+  les clients navigateur comme MCP Inspector.
+- [mcp_server/test_client.py](mcp_server/test_client.py) : 6 cas de test sans LLM, qui passent
+  en stdio et en HTTP.
+- Vérifié à la main dans **MCP Inspector** (outils et ressource visibles et fonctionnels).
+</details>
+
+<details>
+<summary><b>Étape 3 · Jeu d'évaluation (Ex1, Ex4, Ex6)</b> : <code>d2aa08f</code></summary>
+
+- [eval/demandes_ex1.json](eval/demandes_ex1.json) : 10 demandes courtes et la liste **exacte**
+  des biens attendus.
+- [eval/emails_test.json](eval/emails_test.json) : 15 emails couvrant toutes les catégories
+  imposées (simple, inexistant, créneau pris, ambigu, hors périmètre, injection, français + wolof),
+  chacun avec son résultat attendu.
+- [eval/README.md](eval/README.md) : règles de notation.
+</details>
+
+<details>
+<summary><b>Étape 4 · Google Calendar (Ex3)</b> : <code>9660481</code></summary>
+
+- [agent/google_auth.py](agent/google_auth.py) : connexion OAuth, un seul jeton partagé par Gmail
+  et Calendar.
+- [agent/tools_calendar.py](agent/tools_calendar.py) : créneaux libres et gestion des visites
+  (créer, déplacer, annuler, lister).
+- [agent/validation.py](agent/validation.py) : validation humaine (console ou `interrupt()`).
+- [agent/demo_calendar.py](agent/demo_calendar.py) : démonstration complète du critère
+  d'acceptation, testée sur les agendas réels des trois conseillers.
+</details>
+
+---
+
+## 7. Installation
+
+**Prérequis** : Python 3.11 ou plus récent, Git. Node.js (facultatif) pour MCP Inspector.
 
 ```bash
 git clone https://github.com/khadijagueye235/sama-ker-agent.git
 cd sama-ker-agent
 python -m venv .venv
-.venv\Scripts\activate          # Windows  (Linux/macOS : source .venv/bin/activate)
+.venv\Scripts\activate             # Windows  (Linux/macOS : source .venv/bin/activate)
 pip install -r requirements.txt
-cp .env.example .env            # puis renseigner les vraies valeurs dans .env
-python mcp_server/create_db.py  # crée le catalogue SQLite (30 biens)
+cp .env.example .env               # puis renseigner les vraies valeurs
+python mcp_server/create_db.py     # crée le catalogue SQLite (30 biens)
 ```
 
-> `mcp` est fixé en version 1.x : la version 2 renomme `FastMCP` et n'est pas
-> encore compatible avec `langchain-mcp-adapters`.
+### Variables d'environnement (`.env`)
 
-## Serveur MCP du catalogue (`mcp_server/`)
+| Variable | Rôle |
+|---|---|
+| `GROQ_API_KEY` | clé de l'API Groq (jamais dans Git) |
+| `GROQ_MODEL` | `openai/gpt-oss-120b` par défaut |
+| `AGENCY_EMAIL` | adresse du compte Google de test |
+| `MCP_SERVER_URL` | `http://localhost:8000/mcp` en mode HTTP |
+| `GOOGLE_CREDENTIALS_FILE` / `GOOGLE_TOKEN_FILE` | `credentials.json` / `token.json` |
+| `AGENCY_TIMEZONE` | `Africa/Dakar` |
+| `CONSEILLERS` | `Nom:id_agenda@group.calendar.google.com,...` |
 
-Le catalogue des biens est exposé par un serveur MCP écrit avec FastMCP. Tout
-client MCP (notre agent, l'agent d'une autre équipe, MCP Inspector, Claude
-Desktop…) peut s'y brancher sans connaître notre code.
+> `mcp` est fixé en version 1.x : la version 2 renomme `FastMCP` et n'est pas encore compatible
+> avec `langchain-mcp-adapters`. `tzdata` est nécessaire sous Windows pour le fuseau `Africa/Dakar`.
+
+---
+
+## 8. Brique 1 · Catalogue et serveur MCP
 
 | Fichier | Rôle |
 |---|---|
 | `create_db.py` | crée `catalogue.db` : 30 biens fictifs, données fixes |
-| `catalogue.py` | logique des outils (requêtes SQL paramétrées, validation) |
+| `catalogue.py` | logique des outils (requêtes SQL paramétrées, validation des arguments) |
 | `server.py` | serveur MCP : expose les outils et la ressource |
 | `test_client.py` | client de vérification sans LLM (6 cas de test) |
 
 ### Lancer le serveur
 
 ```bash
-# Transport stdio (local) : c'est le client qui lance le serveur
-python mcp_server/server.py
-
-# Transport HTTP (streamable HTTP) : http://127.0.0.1:8000/mcp
-python mcp_server/server.py --transport http
-python mcp_server/server.py --transport http --host 0.0.0.0 --port 8000   # accessible sur le réseau local
+python mcp_server/server.py                                            # stdio : le client lance le serveur
+python mcp_server/server.py --transport http                           # http://127.0.0.1:8000/mcp
+python mcp_server/server.py --transport http --host 0.0.0.0 --port 8000  # accessible sur le réseau local
 ```
 
 ### Outils
@@ -62,7 +319,6 @@ Recherche les biens **disponibles**, triés par loyer croissant. Tous les argume
 | `meuble` | boolean | `true` meublé uniquement, `false` non meublé uniquement |
 | `limite` | integer | 1 à 30, défaut 10 |
 
-Exemple d'appel et de réponse :
 ```json
 // arguments
 {"quartier": "Mermoz", "pieces": 3, "loyer_max": 400000}
@@ -70,7 +326,6 @@ Exemple d'appel et de réponse :
 {
   "ok": true,
   "nb_resultats": 2,
-  "criteres": {"quartier": "Mermoz", "pieces": 3, "loyer_max": 400000},
   "biens": [
     {"id": "SK-001", "type": "appartement", "quartier": "Mermoz", "loyer": 350000, "pieces": 3,
      "adresse": "Rue MZ-12, Mermoz", "disponible": true, "meuble": false,
@@ -87,35 +342,35 @@ Fiche complète d'un bien, y compris son champ `disponible`.
 
 | Argument | Type | Description |
 |---|---|---|
-| `id_bien` | string | Identifiant `"SK-001"` (`"sk-1"`, `"SK1"`, `"1"` acceptés) |
+| `id_bien` | string | `"SK-001"` (`"sk-1"`, `"SK1"`, `"1"` acceptés) |
 
 ```json
-// arguments
-{"id_bien": "SK-099"}
-// résultat
 {"ok": false, "erreur": "Aucun bien avec l'identifiant 'SK-099' dans le catalogue.",
  "conseil": "N'invente pas de bien. Utilise rechercher_biens pour trouver des biens existants."}
 ```
 
-**Format des erreurs.** Les outils ne lèvent jamais d'exception : une erreur est
-renvoyée comme `{"ok": false, "erreur": "...", "conseil": "..."}` pour que le
-modèle puisse corriger son appel.
+**Format des erreurs.** Les outils ne lèvent jamais d'exception : une erreur est renvoyée sous la
+forme `{"ok": false, "erreur": "...", "conseil": "..."}` pour que le modèle corrige son appel.
 
 ### Ressource
 
 | URI | Contenu |
 |---|---|
-| `agence://infos` | Markdown : horaires de visite (lun.–sam., 9 h–18 h, 45 min, Africa/Dakar), zones couvertes, conditions de location, demandes hors périmètre |
+| `agence://infos` | horaires de visite (lun.–sam., 9 h–18 h, 45 min, Africa/Dakar), zones couvertes, conditions de location, demandes hors périmètre |
+
+> **Outil ou ressource ?** Les horaires et conditions sont un contexte fixe à lire : c'est une
+> ressource. La recherche de biens dépend des critères du client et c'est le modèle qui décide
+> de l'appeler : c'est un outil.
 
 ### Se brancher sur le serveur
 
-**Vérification rapide (sans LLM)** :
+**Vérification rapide (sans LLM)**
 ```bash
 python mcp_server/test_client.py                                   # stdio
 python mcp_server/test_client.py --url http://127.0.0.1:8000/mcp   # HTTP (serveur lancé à part)
 ```
 
-**MCP Inspector** (interface web de test, nécessite Node.js) :
+**MCP Inspector**
 ```bash
 npx @modelcontextprotocol/inspector .venv/Scripts/python.exe mcp_server/server.py   # stdio
 ```
@@ -124,12 +379,9 @@ En HTTP (serveur lancé à part avec `--transport http`) :
 2. **Add Servers → + Add manually** : Server ID `sama-ker-http`, Transport `streamable-http`,
    URL `http://127.0.0.1:8000/mcp`, puis **Add** ;
 3. activer l'interrupteur de la carte `sama-ker-http` (Connected) ;
-4. onglet **Tools** en haut : `rechercher_biens` et `detail_bien` apparaissent ; onglet **Resources** : `agence://infos`.
+4. onglet **Tools** : `rechercher_biens` et `detail_bien` ; onglet **Resources** : `agence://infos`.
 
-> Le serveur HTTP envoie les en-têtes CORS (dont `Access-Control-Expose-Headers: Mcp-Session-Id`)
-> nécessaires aux clients qui tournent dans un navigateur, comme l'Inspector.
-
-**Depuis un agent LangChain / LangGraph** (`langchain-mcp-adapters`) :
+**Depuis un agent LangChain / LangGraph**
 ```python
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
@@ -140,63 +392,7 @@ client = MultiServerMCPClient({
 tools = await client.get_tools()   # -> rechercher_biens, detail_bien
 ```
 
-**Depuis un client MCP configuré en JSON** (voir plus bas) :
-
-## Accès Google (OAuth) et agenda des conseillers
-
-### Configuration (une seule fois)
-1. Compte Google **réservé à l'atelier** (aucun compte personnel).
-2. Google Cloud : projet, **Gmail API** et **Google Calendar API** activées, écran de
-   consentement en mode *Testing* avec le compte de test comme utilisateur de test,
-   identifiant OAuth de type **Desktop app** téléchargé en `credentials.json` à la racine.
-3. Google Calendar (interface web) : un agenda par conseiller ; leurs ID vont dans `.env` :
-   `CONSEILLERS=Nom:id@group.calendar.google.com,...`
-4. Première connexion (ouvre le navigateur, se connecter avec le compte de test) :
-   ```bash
-   python -m agent.google_auth
-   ```
-   Le jeton est enregistré dans `token.json`. `credentials.json`, `token.json` et `.env`
-   sont ignorés par Git.
-
-**Scopes demandés (strict nécessaire)** : `gmail.modify` (lecture, libellés, brouillons, envoi,
-sans suppression définitive) et `calendar.events` (événements uniquement : les agendas sont
-créés à la main, l'agent ne peut ni les créer, ni les supprimer, ni les partager).
-
-### Outils Calendar (`agent/tools_calendar.py`)
-
-| Outil | Type | Rôle |
-|---|---|---|
-| `lister_creneaux_libres(date_debut, date_fin?, heure_min?, heure_max?, conseiller?, nombre_max?)` | lecture | créneaux réellement libres, avec les conseillers disponibles |
-| `lister_visites(date_debut, date_fin?, client_email?)` | lecture | visites inscrites par l'agent (pour retrouver un `event_id`) |
-| `creer_visite(debut, id_bien, adresse, client_nom, client_email?, conseiller?)` | **écriture** | inscrit une visite de 45 min avec l'adresse du bien |
-| `deplacer_visite(event_id, nouveau_debut, conseiller?)` | **écriture** | crée la nouvelle visite puis annule l'ancienne |
-| `annuler_visite(event_id)` | **écriture** | annule une visite |
-
-**Règles de l'agence appliquées dans le code** : visites de 45 min, du lundi au samedi,
-de 9 h à 18 h, fuseau `Africa/Dakar`, au moins 2 h à l'avance, créneaux proposés toutes les 30 min.
-
-**Aucun doublon**, avec deux protections :
-1. le créneau est **revérifié** dans l'agenda juste avant l'écriture (`creneau_pris` sinon) ;
-2. chaque visite reçoit un **identifiant calculé** à partir de l'agenda et de l'heure :
-   si deux demandes passent la vérification en même temps, Google refuse la seconde (409 → `doublon`).
-
-**Validation humaine** (`agent/validation.py`) : les outils d'écriture ne sont jamais donnés au
-modèle directement. `outils_langgraph()` les enveloppe avec `interrupt()` : le graphe se met en
-pause et ne reprend qu'avec `Command(resume={"ok": True})`. En cas de refus, l'outil renvoie
-`refus_conseiller` et rien n'est écrit.
-
-**Démonstration du critère de l'exercice 3** :
-```bash
-python -m agent.demo_calendar          # chaque écriture est validée au clavier par le conseiller
-python -m agent.demo_calendar --auto   # validations automatiques (test rapide)
-```
-Elle propose trois créneaux pour « jeudi prochain en fin d'après-midi », crée une visite après
-validation, montre qu'une seconde demande sur le même créneau ne crée pas de doublon, qu'un refus
-n'écrit rien, puis déplace et annule la visite.
-
-## Client MCP configuré en JSON
-
-**Depuis un client MCP configuré en JSON** (Claude Desktop, Cursor…) :
+**Depuis un client MCP configuré en JSON** (Claude Desktop, Cursor…)
 ```json
 {
   "mcpServers": {
@@ -207,3 +403,219 @@ n'écrit rien, puis déplace et annule la visite.
   }
 }
 ```
+
+---
+
+## 9. Brique 2 · Google Calendar
+
+### Configuration (une seule fois)
+
+1. Un compte Google **réservé à l'atelier** (aucun compte personnel).
+2. Google Cloud : **Gmail API** et **Google Calendar API** activées, écran de consentement en mode
+   *Testing* avec le compte de test comme utilisateur, identifiant OAuth **Desktop app**
+   enregistré en `credentials.json` à la racine.
+3. Google Calendar : un agenda par conseiller (Abdou Fall, Awa Diop, Moussa Ndiaye), **non public** ;
+   leurs identifiants vont dans `CONSEILLERS`.
+4. Première connexion (ouvre le navigateur, se connecter avec le compte de test) :
+   ```bash
+   python -m agent.google_auth
+   ```
+
+### Outils
+
+| Outil | Type | Rôle |
+|---|---|---|
+| `lister_creneaux_libres(date_debut, date_fin?, heure_min?, heure_max?, conseiller?, nombre_max?)` | lecture | créneaux réellement libres, avec les conseillers disponibles |
+| `lister_visites(date_debut, date_fin?, client_email?)` | lecture | visites inscrites par l'agent |
+| `creer_visite(debut, id_bien, adresse, client_nom, client_email?, conseiller?)` | **écriture** | visite de 45 min avec l'adresse du bien |
+| `deplacer_visite(event_id, nouveau_debut, conseiller?)` | **écriture** | crée la nouvelle visite puis annule l'ancienne |
+| `annuler_visite(event_id)` | **écriture** | annule une visite |
+
+### Règles de l'agence, appliquées dans le code
+
+| Règle | Valeur |
+|---|---|
+| Durée d'une visite | 45 minutes |
+| Jours | du lundi au samedi |
+| Horaires | 9 h – 18 h (la visite doit se terminer avant 18 h) |
+| Fuseau | `Africa/Dakar` |
+| Délai minimum | 2 h à l'avance |
+| Pas des créneaux proposés | 30 minutes |
+| Horizon de recherche | 14 jours maximum |
+
+### Aucun doublon
+
+```mermaid
+flowchart TD
+    D["creer_visite(...)"] --> V{"Créneau encore libre<br/>dans l'agenda ?"}
+    V -- non --> P["refus : creneau_pris"]
+    V -- oui --> I["insertion avec un identifiant calculé<br/>sk + sha1(agenda | heure)"]
+    I --> R{"Réponse de Google"}
+    R -- "200" --> OK["visite créée"]
+    R -- "409 : identifiant déjà utilisé" --> X{"Ancienne visite annulée ?"}
+    X -- oui --> RV["visite réactivée"]
+    X -- non --> DB["refus : doublon"]
+```
+
+Deux protections : le créneau est **revérifié** juste avant l'écriture, et l'**identifiant
+déterministe** fait refuser par Google une seconde demande arrivée en même temps.
+
+### Démonstration du critère de l'exercice 3
+
+```bash
+python -m agent.demo_calendar           # chaque écriture est validée au clavier
+python -m agent.demo_calendar --auto    # validations automatiques (test rapide)
+python -m agent.demo_calendar --garder  # garde les visites pour les voir dans Google Calendar
+```
+
+Résultat obtenu sur les agendas réels :
+1. « jeudi prochain en fin d'après-midi » → 16h00, 16h30, 17h00 avec les conseillers libres ;
+2. visite de SK-001 créée après validation, avec l'adresse « Rue MZ-12, Mermoz » ;
+3. même créneau, même conseiller → `creneau_pris` ; sans conseiller imposé → attribuée à un
+   conseiller encore libre ; deux demandes simultanées → `doublon` ;
+4. refus du conseiller → rien n'est écrit ;
+5. déplacement puis annulation, chacun après validation ; aucune visite ne reste.
+
+---
+
+## 10. Brique 3 · Gmail
+
+> **En cours (rôle B).** Le code de départ (lecture, brouillon dans le bon fil, libellés) a été
+> testé sur la boîte de test ; il reste à l'intégrer dans `agent/tools_google.py`.
+
+| Fonction prévue | Type | Rôle |
+|---|---|---|
+| `lire_demandes_non_traitees()` | lecture | emails sans libellé « Sama Kër/… », corps décodé |
+| `creer_brouillon(message_id, thread_id, ...)` | écriture sans effet externe | brouillon **dans le fil d'origine** (`threadId`, `In-Reply-To`, `References`, objet « Re: ») |
+| `envoyer_brouillon(draft_id, message_id)` | **écriture, derrière la validation** | envoi puis libellé « Répondu » |
+| `transmettre_conseiller(message_id, motif)` | écriture | libellé « Transmis à un conseiller » |
+
+**Résistance à l'injection.** Le contenu d'un email est une **donnée, jamais une instruction** :
+il est placé entre balises `<email>…</email>` dans le prompt, le prompt système le rappelle, et
+de toute façon aucune action d'écriture ne peut s'exécuter sans le conseiller (cas E13 et E14 du
+jeu d'évaluation).
+
+---
+
+## 11. Brique 4 · Le cerveau de l'agent (LangGraph)
+
+> **En cours (rôle C).** Schéma cible du graphe :
+
+```mermaid
+flowchart LR
+    S((START)) --> M["agent<br/>LLM + outils liés"]
+    M -->|appel d'outil| T["tools<br/>ToolNode"]
+    M -->|réponse finale| E((END))
+    T -->|résultat| M
+    T -.->|outil d'écriture| I{{"interrupt()<br/>pause"}}
+    I -.->|"Command(resume={'ok': True})"| T
+    I -.->|refus| T
+```
+
+| Élément | Choix |
+|---|---|
+| État | `MessagesState` |
+| Outils de lecture | `rechercher_biens`, `detail_bien` (via MCP), `lister_creneaux_libres`, `lister_visites`, lecture Gmail |
+| Outils d'écriture | `creer_visite`, `deplacer_visite`, `annuler_visite`, `envoyer_brouillon`, tous enveloppés par `outils_langgraph()` |
+| Mémoire | checkpointer SQLite, `thread_id` = fil Gmail : la conversation reprend après la validation |
+| Garde-fous | `recursion_limit`, `ToolNode(handle_tool_errors=True)` |
+| Traces | callback JSONL dans `traces/` (chaque appel de modèle et d'outil) |
+
+```python
+from agent.tools_calendar import OUTILS_LECTURE, OUTILS_ECRITURE
+from agent.validation import outils_langgraph
+
+outils = outils_langgraph(OUTILS_LECTURE, OUTILS_ECRITURE)   # écriture = interrupt() d'abord
+```
+
+---
+
+## 12. Évaluation
+
+| Fichier | Contenu |
+|---|---|
+| [eval/demandes_ex1.json](eval/demandes_ex1.json) | 10 demandes et les biens **exacts** attendus (Ex1, Ex2) |
+| [eval/emails_test.json](eval/emails_test.json) | 15 emails complets avec le résultat attendu (Ex4, Ex6) |
+| [eval/run_eval.py](eval/run_eval.py) | rejoue le jeu et produit le tableau de résultats *(à venir)* |
+| `eval/results/` | résultats avant / après correction |
+
+| Catégorie | Emails |
+|---|---|
+| Demande simple | E01, E02, E03 |
+| Bien inexistant / indisponible | E04, E05, E06 |
+| Créneau pris / impossible | E07, E08 |
+| Demande ambiguë | E09, E10 |
+| Hors périmètre | E11, E12 |
+| Tentative d'injection | E13, E14 |
+| Français et wolof | E15 |
+
+Un cas est réussi si la **décision** est correcte, si les **biens cités** sont exactement ceux
+attendus, si les **créneaux** respectent les règles et sont libres, et si **rien n'a été envoyé
+ni créé sans validation**. Détails dans [eval/README.md](eval/README.md).
+
+---
+
+## 13. Sécurité et confidentialité
+
+- **Secrets hors de Git** : `.env`, `credentials.json`, `token.json` et `catalogue.db` sont dans
+  `.gitignore`. Ils se transmettent entre membres de l'équipe **en privé**, jamais par le dépôt.
+- **Compte Google dédié** à l'atelier ; aucun compte personnel n'est connecté à l'agent.
+- **Scopes minimaux** : `gmail.modify` (pas de suppression définitive) et `calendar.events`
+  (pas de gestion des agendas eux-mêmes).
+- **Agendas des conseillers non publics.**
+- **Validation humaine** avant tout envoi ou toute écriture dans l'agenda.
+- **Requêtes SQL paramétrées** et contenu des emails traité comme une donnée.
+
+---
+
+## 14. Structure du dépôt
+
+```
+sama-ker-agent/
+├── mcp_server/            Brique 1 · catalogue et serveur MCP (rôle A)
+│   ├── create_db.py         crée catalogue.db (30 biens)
+│   ├── catalogue.py         rechercher_biens, detail_bien
+│   ├── server.py            serveur FastMCP (stdio / HTTP)
+│   └── test_client.py       6 cas de test sans LLM
+├── agent/
+│   ├── google_auth.py     OAuth Google (Gmail + Calendar)
+│   ├── tools_calendar.py  Brique 2 · créneaux et visites
+│   ├── validation.py      validation humaine (console / interrupt)
+│   ├── demo_calendar.py   démonstration de l'exercice 3
+│   ├── tools_google.py    Brique 3 · Gmail (rôle B, en cours)
+│   ├── prompts.py         prompt système (rôle C)
+│   ├── graph.py           graphe LangGraph (rôle C)
+│   └── main.py            point d'entrée de l'agent (rôle C)
+├── eval/                  jeu d'évaluation et script
+├── traces/                traces JSONL des exécutions
+├── docs/                  documents de l'équipe
+├── .env.example           modèle de configuration
+└── requirements.txt
+```
+
+---
+
+## 15. Méthode de travail Git
+
+```mermaid
+gitGraph
+    commit id: "structure du projet"
+    branch feat/catalogue
+    checkout feat/catalogue
+    commit id: "catalogue SQLite"
+    commit id: "serveur MCP"
+    commit id: "CORS HTTP"
+    commit id: "doc Inspector"
+    commit id: "jeu d'évaluation"
+    branch feat/calendar
+    checkout feat/calendar
+    commit id: "Google Calendar"
+    branch feat/gmail
+    checkout feat/gmail
+    commit id: "Gmail (rôle B)"
+```
+
+- **Une branche par brique** (`feat/catalogue`, `feat/calendar`, `feat/gmail`, `feat/agent`),
+  fusionnée dans `main` par pull request une fois testée.
+- **Commits réguliers** et messages explicites, pour que chacun reparte de la dernière version.
+- Avant chaque commit : vérifier qu'aucun secret n'est indexé (`git status`, `git diff --cached`).
