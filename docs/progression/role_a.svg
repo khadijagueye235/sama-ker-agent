@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="20" viewBox="0 0 300 20" role="img" aria-label="75 %">
+  <title>75 %</title>
+  <rect width="300" height="20" rx="10" fill="#8c959f" fill-opacity="0.25"/>
+  <rect width="225" height="20" rx="10" fill="#0969da"/>
+  <text x="219" y="14.5" text-anchor="end" fill="#ffffff"
+        font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="600">75 %</text>
+</svg>
