@@ -1,7 +1,7 @@
 """Démonstration Gmail (exercice 4), à lancer avec : python -m agent.demo_gmail
 
-Avant : envoie-toi un ou plusieurs emails de test à 
-depuis une AUTRE adresse (copie l'objet et le corps de eval/emails_test.json).
+Avant : envoie un ou plusieurs emails de test à l'adresse du compte de test
+(variable AGENCY_EMAIL dans .env) depuis une AUTRE adresse (copie l'objet et le corps de eval/emails_test.json).
 
 Options :
   --envoyer     propose d'envoyer le brouillon (validation au clavier o/N)
