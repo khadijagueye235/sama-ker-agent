@@ -74,8 +74,8 @@ même si l'évaluation plante.
 ## Lancer l'évaluation
 
 ```bash
-python -m eval.run_eval --label avant                  # agent de l'équipe (module agent.main), avec Google
-python -m eval.run_eval --label apres --pause 5        # après correction ; pause entre deux cas (limites Groq)
+python -m eval.run_eval --agent agent.adaptateur_eval --label avant --pause 5   # agent de l'équipe, avec Google
+python -m eval.run_eval --agent agent.adaptateur_eval --label apres --pause 5   # après correction
 python -m eval.run_eval --cas E07,E13 --label essai    # quelques cas seulement
 python -m eval.run_eval --jeu ex1                      # critère de l'exercice 1 seulement (10 demandes)
 python -m eval.run_eval --hors-ligne                   # sans Google : créneaux non vérifiés dans l'agenda
@@ -88,7 +88,24 @@ brouillons compris). Les rapports `avant` et `apres` sont à commiter pour l'exe
 l'agent enregistre chaque demande puis **refuse**. En mode connecté, le script vérifie en plus,
 après chaque cas, qu'aucune visite n'a été créée et qu'aucun email n'a été envoyé.
 
-### Ce que l'agent doit fournir (contrat pour `agent/main.py`)
+### L'adaptateur d'évaluation (`agent/adaptateur_eval.py`)
+
+Les emails du jeu de test sont fictifs : ils n'existent pas dans Gmail. L'adaptateur fait donc
+jouer l'agent avec :
+
+| Outils | Pendant l'évaluation |
+|---|---|
+| `rechercher_biens`, `detail_bien`, `lister_creneaux_libres`, `lister_visites` | **réels** (catalogue et agendas) |
+| `creer_visite`, `deplacer_visite`, `annuler_visite` | derrière la validation, qui **refuse** toujours |
+| `creer_brouillon`, `transmettre_conseiller` | **factices** : même nom, mêmes arguments, même notice ; ils enregistrent le texte au lieu d'appeler Gmail |
+
+Il traduit ensuite ce que l'agent a fait : `transmettre_conseiller` appelé → `transmettre` ;
+sinon la ligne `DECISION: ...` de son dernier message ; les biens = références **disponibles**
+citées dans le brouillon ; les créneaux = ceux renvoyés par `lister_creneaux_libres` et repris
+(jour + heure) dans le brouillon. Il ajoute au prompt la date du jour, indispensable pour
+comprendre « jeudi prochain ». L'Ex1 (`repondre_demande`) évalue directement `agent.main.demander`.
+
+### Ce que l'agent doit fournir (contrat pour un autre module évalué)
 
 ```python
 def traiter_email(email: dict, demander) -> dict:
