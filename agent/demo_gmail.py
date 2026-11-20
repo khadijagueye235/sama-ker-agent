@@ -1,6 +1,6 @@
 """Démonstration Gmail (exercice 4), à lancer avec : python -m agent.demo_gmail
 
-Avant : envoie-toi un ou plusieurs emails de test à samakeur23@gmail.com
+Avant : envoie-toi un ou plusieurs emails de test à 
 depuis une AUTRE adresse (copie l'objet et le corps de eval/emails_test.json).
 
 Options :
