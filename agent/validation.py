@@ -20,6 +20,7 @@ LIBELLES = {
     "creer_visite": "Créer une visite dans l'agenda",
     "deplacer_visite": "Déplacer une visite",
     "annuler_visite": "Annuler une visite",
+    "envoyer_brouillon": "Envoyer la réponse au client",
 }
 
 
