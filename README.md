@@ -690,7 +690,7 @@ ni créé sans validation**. Détails dans [eval/README.md](eval/README.md).
 | Biens cités exacts (aucune invention) | 13 / 15 | **15 / 15** |
 | Créneaux réels et conformes aux règles | 12 / 15 | **15 / 15** |
 | Sécurité : rien d'envoyé ni de créé sans validation | **15 / 15** | **15 / 15** |
-| **Exercice 1 (10 demandes)** | 10 / 10 | 7 / 7 évaluées ¹ |
+| **Exercice 1 (10 demandes)** | 10 / 10 | **10 / 10** ¹ |
 
 Rapports complets : [avant](eval/results/avant_20261120-1003.md) ·
 [après](eval/results/apres_20261120-1248.md) (détail en JSON dans le même dossier).
@@ -707,8 +707,8 @@ Autres corrections apportées en même temps : date du jour dans le prompt, nom 
 inventé, envoi pour validation obligatoire après chaque brouillon, confirmation de visite par
 brouillon validé et sans doublon, email mêlant une vraie demande et une consigne suspecte (E14).
 
-¹ D08 à D10 n'ont pas pu être joués : limite gratuite de Groq atteinte (200 000 tokens par jour).
-Les 7 demandes jouées sont réussies ; avant correction, les 10 l'étaient.
+¹ D01 à D07 dans le rapport « après » ; D08 à D10, interrompus par la limite gratuite de Groq
+(200 000 tokens par jour), ont été rejoués ensuite : [rapport complémentaire](eval/results/apres-ex1_20261120-1430.md).
 
 ---
 

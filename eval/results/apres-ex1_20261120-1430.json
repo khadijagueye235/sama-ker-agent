@@ -1,0 +1,48 @@
+{
+  "label": "apres-ex1",
+  "date": "2026-11-20T14:30:35+00:00",
+  "agent": "agent.adaptateur_eval",
+  "google": true,
+  "emails": null,
+  "ex1": [
+    {
+      "id": "D08",
+      "texte": "Un F2 meublé au Plateau",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-020"
+      ],
+      "biens_cites": [
+        "SK-020"
+      ],
+      "reponse": "SK-020 – Plateau  \nAdresse : Rue PL-30, Plateau  \nLoyer : 350 000 F CFA  \nPièces : 2 (F2)  \nMeublé : oui  \nDisponible : oui"
+    },
+    {
+      "id": "D09",
+      "texte": "Un appartement à Yoff",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-027"
+      ],
+      "biens_cites": [
+        "SK-027"
+      ],
+      "reponse": "Référence : SK-027  \nQuartier : Yoff  \nAdresse : Rue YF-5, Yoff Tonghor  \nLoyer : 230 000 F CFA par mois  \nPièces : 3 (F3)  \nType : appartement (non meublé)  \nDisponibilité : disponible."
+    },
+    {
+      "id": "D10",
+      "texte": "Un F3 à Sacré-Coeur pour 300 000 F maximum",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-021"
+      ],
+      "biens_cites": [
+        "SK-021"
+      ],
+      "reponse": "Référence : SK-021  \nQuartier : Sacré‑Cœur  \nAdresse : Sacré‑Cœur 3, villa 112  \nLoyer : 280 000 F CFA par mois  \nNombre de pièces : 3 (F3)  \n\nCe bien correspond à votre recherche d’un F3 à Sacré‑Cœur avec un loyer maximum de 300 000 F."
+    }
+  ]
+}
