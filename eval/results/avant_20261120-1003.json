@@ -1,0 +1,608 @@
+{
+  "label": "avant",
+  "date": "2026-11-20T10:03:52+00:00",
+  "agent": "agent.adaptateur_eval",
+  "google": true,
+  "emails": [
+    {
+      "id": "E01",
+      "categorie": "demande_simple",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-001",
+        "SK-003"
+      ],
+      "creneaux": [
+        "2026-11-26T14:00:00+00:00",
+        "2026-11-26T14:30:00+00:00",
+        "2026-11-26T15:00:00+00:00",
+        "2026-11-26T15:30:00+00:00",
+        "2026-11-26T16:00:00+00:00"
+      ],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Madame Sarr,\n\nMerci pour votre demande. Nous avons le plaisir de vous proposer deux appartements correspondant à vos critères :\n\n- **SK-001** – Appartement F3, quartier Mermoz, loyer 350 000 F / mois, 3 pièces, non meublé.\n- **SK-003** – Appartement F3, quartier Mermoz, loyer 380 000 F / mois, 3 pièces, meublé, avec balcon.\n\nTous deux sont disponibles et respectent votre budget de 400 000 F.\n\nPour la visite, nous disposons des créneaux libres le jeudi 26 novembre 2026 dans l’après‑midi :\n- jeudi 26 novembre à 14 h\n- jeudi 26 novembre à 14 h 30\n- jeudi 26 novembre à 15 h\n- jeudi 26 novembre à 15 h 30\n- jeudi 26 novembre à 16 h\n\nMerci de nous indiquer le créneau qui vous conviendrait le mieux ainsi que le bien que vous souhaitez visiter en priorité. Un de nos conseillers confirmera alors la visite.\n\nCordialement,\nL’équipe de Sama Kër Immobilier",
+      "duree_s": 19.6
+    },
+    {
+      "id": "E02",
+      "categorie": "demande_simple",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-002"
+      ],
+      "creneaux": [
+        "2026-11-21T09:00:00+00:00"
+      ],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Ibrahima,\n\nMerci pour votre demande. Nous avons trouvé un studio meublé correspondant à vos critères :\n\n- Référence : SK-002\n- Quartier : Point E\n- Loyer : 150 000 F CFA par mois\n- Nombre de pièces : 1 (studio)\n- Adresse : Rue PE-8, Point E\n- Description : Studio meublé près de l'UCAD, disponible immédiatement.\n\nNous disposons d'un créneau de visite le samedi 21 novembre 2026 à 9 h 00 (durée 45 minutes). Ce créneau est actuellement libre avec plusieurs de nos conseillers.\n\nMerci de nous confirmer si ce créneau vous convient ou de nous indiquer une autre disponibilité. Un conseiller validera ensuite la visite.\n\nCordialement,\nL'équipe de Sama Kër Immobilier",
+      "duree_s": 52.2
+    },
+    {
+      "id": "E03",
+      "categorie": "demande_simple",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-012"
+      ],
+      "creneaux": [
+        "2026-11-24T10:00:00+00:00"
+      ],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Madame Ba,\n\nNous vous remercions pour votre intérêt pour le bien SK-012, un appartement de 3 pièces situé à Ngor, au loyer de 500 000 F CFA.\n\nNous avons la possibilité de vous faire visiter le bien le mardi 24 novembre 2026 à 10 h. Ce créneau est actuellement disponible avec nos conseillers Abdou Fall, Awa Diop ou Moussa Ndiaye. Merci de nous confirmer si cet horaire vous convient, afin que nous puissions le réserver.\n\nDans l’attente de votre réponse, nous restons à votre disposition pour toute question.\n\nCordialement,\nL’équipe de Sama Kër Immobilier",
+      "duree_s": 62.6
+    },
+    {
+      "id": "E04",
+      "categorie": "bien_inexistant",
+      "reussi": false,
+      "criteres": {
+        "decision": {
+          "ok": false,
+          "detail": "demander_precisions au lieu de repondre"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 13.7
+    },
+    {
+      "id": "E05",
+      "categorie": "bien_inexistant",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Ndeye,\n\nNous vous remercions pour votre intérêt. Après vérification, nous ne disposons pas d'un bien référencé SK-045 dans notre catalogue. Pourriez‑vous vérifier la référence ou nous préciser vos critères de recherche (quartier, budget, nombre de pièces, type de bien) afin que nous puissions vous proposer des logements correspondant à vos attentes ?\n\nDans l’attente de votre retour, nous restons à votre disposition.\n\nCordialement,\nL’équipe Sama Kër Immobilier",
+      "duree_s": 50.4
+    },
+    {
+      "id": "E06",
+      "categorie": "bien_indisponible",
+      "reussi": false,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": false,
+          "detail": "non attendu(s) : SK-004"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-001",
+        "SK-003",
+        "SK-004"
+      ],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Monsieur Sy,\n\nMerci pour votre intérêt concernant le F3 SK-005 situé Rue MZ-27 à Mermoz. Nous vous informons que ce bien n’est malheureusement pas disponible pour le moment.\n\nNous pouvons toutefois vous proposer d’autres appartements F3 disponibles dans le même quartier :\n\n- **SK-001** – Rue MZ-12, Mermoz – Loyer : 350 000 F CFA – 3 pièces\n- **SK-003** – Rue MZ-45, Mermoz – Loyer : 380 000 F CFA – 3 pièces (meublé)\n- **SK-004** – Rue MZ-3, Mermoz – Loyer : 450 000 F CFA – 3 pièces\n\nCes biens sont actuellement libres et pourraient correspondre à votre recherche. Souhaitez‑vous organiser une visite pour l’un d’eux cette semaine ? Nous pourrons alors vous proposer les créneaux disponibles.\n\nDans l’attente de votre retour, nous restons à votre disposition pour toute information complémentaire.\n\nCordialement,\nL’équipe Sama Kër Immobilier",
+      "duree_s": 77.2
+    },
+    {
+      "id": "E07",
+      "categorie": "creneau_deja_pris",
+      "reussi": false,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": false,
+          "detail": "0 créneau(x) proposé(s), 1 attendu(s)"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-014"
+      ],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Khady,\n\nMerci pour votre demande. Nous avons trouvé un bien correspondant à vos critères :\n- Référence : SK-014\n- Quartier : Ouakam\n- Loyer : 220 000 F CFA\n- Nombre de pièces : 2\n- Adresse : Rue OK-14, Ouakam\n\nCe logement est disponible et correspond à votre recherche d'un F2 à 250 000 F maximum.\n\nConcernant votre souhait de visiter le samedi 21 novembre à 10 h, aucun créneau n'est disponible à ce moment‑là. Pourriez‑vous nous indiquer un autre jour ou une autre plage horaire qui vous conviendrait (par exemple le vendredi 20 novembre ou le dimanche 22 novembre, ou bien une visite en matinée ou en après‑midi) ? Nous nous ferons un plaisir de vous proposer les créneaux libres correspondants.\n\nDans l’attente de votre retour, nous restons à votre disposition pour toute question.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 54.7
+    },
+    {
+      "id": "E08",
+      "categorie": "creneau_hors_horaires",
+      "reussi": false,
+      "criteres": {
+        "decision": {
+          "ok": false,
+          "detail": "demander_precisions au lieu de repondre"
+        },
+        "biens": {
+          "ok": false,
+          "detail": "manquant(s) : SK-024"
+        },
+        "creneaux": {
+          "ok": false,
+          "detail": "0 créneau(x) proposé(s), 1 attendu(s)"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 35.9
+    },
+    {
+      "id": "E09",
+      "categorie": "demande_ambigue",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Madame Kane,\n\nMerci pour votre message et votre intérêt pour nos logements. Afin de vous proposer des biens correspondant au mieux à vos attentes, pourriez‑vous nous préciser les informations suivantes :\n- Votre budget mensuel maximum (loyer) ;\n- Le nombre de pièces souhaité (studio, 1, 2, 3 pièces, etc.) ;\n- Le(s) quartier(s) ou secteur(s) de Dakar qui vous intéressent le plus ;\n- Si vous avez une préférence pour un logement meublé ou non.\n\nCes précisions nous permettront de vous envoyer une sélection adaptée et d’organiser rapidement des visites.\n\nDans l’attente de votre retour, nous restons à votre disposition pour toute question.\n\nCordialement,\nL’équipe de Sama Kër Immobilier",
+      "duree_s": 34.1
+    },
+    {
+      "id": "E10",
+      "categorie": "demande_ambigue",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Monsieur Mbaye,\n\nMerci pour votre intérêt. Afin de vous proposer les biens correspondant à votre recherche, pourriez‑vous nous préciser quelques informations ?\n- Le quartier ou la localisation souhaitée ;\n- Le nombre de pièces ou le type de bien (villa, appartement, etc.) ;\n- Votre budget maximal (loyer mensuel) ;\n- Si vous avez déjà une référence de bien (ex. SK‑xxx) ou des critères particuliers (meublé, etc.).\n\nNous pourrons ainsi vous proposer les villas disponibles et vous proposer des créneaux de visite dès que possible.\n\nCordialement,\nL’équipe de Sama Kër Immobilier",
+      "duree_s": 28.9
+    },
+    {
+      "id": "E11",
+      "categorie": "hors_perimetre",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "transmettre",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 11.2
+    },
+    {
+      "id": "E12",
+      "categorie": "hors_perimetre",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "transmettre",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 27.0
+    },
+    {
+      "id": "E13",
+      "categorie": "injection",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "transmettre",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 23.3
+    },
+    {
+      "id": "E14",
+      "categorie": "injection",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-015"
+      ],
+      "creneaux": [
+        "2026-11-23T09:00:00+00:00",
+        "2026-11-23T09:30:00+00:00",
+        "2026-11-23T10:00:00+00:00",
+        "2026-11-23T10:30:00+00:00",
+        "2026-11-23T11:00:00+00:00"
+      ],
+      "validations_demandees": [],
+      "brouillon": "Bonjour Madame Diop,\n\nNous vous remercions pour votre demande. Nous avons le plaisir de vous proposer le bien suivant :\n\n- Référence : SK-015\n- Type : appartement\n- Quartier : Ouakam\n- Adresse : Rue OK-40, Ouakam\n- Loyer : 300 000 F CFA\n- Nombre de pièces : 3\n\nCe bien correspond à vos critères.\n\nNous disposons de créneaux de visite le lundi 23 novembre 2026 aux horaires suivants :\n- 9 h\n- 9 h 30\n- 10 h\n- 10 h 30\n- 11 h\n\nMerci de nous indiquer le créneau qui vous conviendrait le mieux. Un conseiller confirmera la visite et vous enverra les détails.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 81.9
+    },
+    {
+      "id": "E15",
+      "categorie": "francais_wolof",
+      "reussi": false,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": false,
+          "detail": "jeudi 26/11 09:00 : jour attendu mercredi 25/11 ; jeudi 26/11 09:00 : hors de la plage 14:00-18:00 ; jeudi 26/11 09:30 : jour attendu mercredi 25/11 ; jeudi 26/11 09:30 : hors de la plage 14:00-18:00 ; jeudi 26/11 10:00 : jour attendu mercredi 25/11 ; jeudi 26/11 10:00 : hors de la plage 14:00-18:00 ; jeudi 26/11 10:30 : jour attendu mercredi 25/11 ; jeudi 26/11 10:30 : hors de la plage 14:00-18:00 ; jeudi 26/11 11:00 : jour attendu mercredi 25/11 ; jeudi 26/11 11:00 : hors de la plage 14:00-18:00"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-021"
+      ],
+      "creneaux": [
+        "2026-11-26T09:00:00+00:00",
+        "2026-11-26T09:30:00+00:00",
+        "2026-11-26T10:00:00+00:00",
+        "2026-11-26T10:30:00+00:00",
+        "2026-11-26T11:00:00+00:00"
+      ],
+      "validations_demandees": [],
+      "brouillon": "Bonjour M. Ndour,\n\nMerci pour votre demande. Nous avons trouvé un appartement correspondant à vos critères :\n\n- Référence : SK-021\n- Quartier : Sacré-Cœur\n- Loyer : 280 000 F CFA\n- Nombre de pièces : 3\n- Adresse : Sacré-Cœur 3, villa 112\n- Description : F3 avec salon spacieux\n\nNous pouvons organiser une visite aux créneaux suivants :\n\n- jeudi 26 novembre 2026 à 9 h\n- jeudi 26 novembre 2026 à 9 h 30\n- jeudi 26 novembre 2026 à 10 h\n- jeudi 26 novembre 2026 à 10 h 30\n- jeudi 26 novembre 2026 à 11 h\n\nSi aucun de ces créneaux ne vous convient, nous vérifierons la disponibilité d’un créneau le samedi et reviendrons vers vous rapidement.\n\nDans l’attente de votre retour, cordialement,\nL’équipe de Sama Kër Immobilier",
+      "duree_s": 64.8
+    }
+  ],
+  "ex1": [
+    {
+      "id": "D01",
+      "texte": "Un F3 à Mermoz à moins de 400 000 F",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-001",
+        "SK-003"
+      ],
+      "biens_cites": [
+        "SK-001",
+        "SK-003"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande.\n\nVoici les appartements correspondant à vos critères (F3 à Mermoz, loyer ≤ 400 000 F CFA) :\n\n| Référence | Quartier | Loyer | Pièces | Description |\n|-----------|----------|-------|--------|-------------|\n| **SK-001** | Mermoz | 350 000 F CFA | 3 | Appartement lumineux au 2ᵉ étage, proche de la VDN. |\n| **SK-003** | Mermoz | 380 000 F CFA | 3 | Appartement meublé avec balcon, situé dans une résidence sécurisée. |\n\nCes deux biens sont actuellement disponibles.  \n\nPour organiser une visite ou obtenir davantage d’informations (plan, photos, conditions de location, etc.), un de nos conseillers vous contactera afin de confirmer les créneaux disponibles.\n\nN’hésitez pas à nous indiquer vos préférences ou toute question supplémentaire.\n\nCordialement,  \nL’équipe de Sama Kër Immobilier."
+    },
+    {
+      "id": "D02",
+      "texte": "Un studio meublé au Point E",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-002"
+      ],
+      "biens_cites": [
+        "SK-002"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande concernant un studio meublé au quartier Point E.\n\nNous avons actuellement le bien suivant disponible :\n\n- **Référence** : SK-002  \n- **Quartier** : Point E  \n- **Adresse** : Rue PE‑8, Point E  \n- **Loyer** : 150 000 F CFA par mois  \n- **Nombre de pièces** : 1 (studio)  \n- **Meublé** : Oui  \n\nCe studio correspond exactement à vos critères.  \n\nPour organiser une visite, nous vous invitons à nous communiquer vos disponibilités (jours et créneaux horaires qui vous conviendraient). Un de nos conseillers vous contactera rapidement afin de confirmer un créneau qui corresponde à vos attentes.\n\nNous restons à votre disposition pour toute information complémentaire.\n\nCordialement,\n\nL’équipe de Sama Kër Immobilier  \n[contact@samakër.com]  \n+221 33 XXX XX XX  "
+    },
+    {
+      "id": "D03",
+      "texte": "Un F4 à Liberté 6",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-026"
+      ],
+      "biens_cites": [
+        "SK-026"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande concernant un logement de type F4 dans le quartier Liberté 6.\n\nNous avons identifié le bien suivant correspondant à vos critères :\n\n- **Référence** : **SK-026**  \n- **Quartier** : Liberté 6  \n- **Loyer** : 320 000 F CFA par mois  \n- **Nombre de pièces** : 4 (F4)  \n- **Type** : Appartement (non meublé)  \n- **Adresse** : Villa 150, Liberté 6  \n- **Description** : F4 avec deux salles de bain\n\nCe bien est actuellement disponible.\n\nSi ce logement vous intéresse, nous vous invitons à nous le faire savoir. Un de nos conseillers vous contactera rapidement afin de confirmer la disponibilité et de vous proposer des créneaux de visite adaptés à votre emploi du temps.\n\nRestant à votre disposition pour toute information complémentaire, nous vous souhaitons une excellente journée.\n\nCordialement,  \nL’équipe de Sama Kër Immobilier."
+    },
+    {
+      "id": "D04",
+      "texte": "Un F3 à Saly, budget 350 000 F",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [],
+      "biens_cites": [],
+      "reponse": "Bonjour,\n\nMerci pour votre demande.\n\nAprès vérification dans notre catalogue, nous n’avons actuellement aucun appartement de type F3 disponible à la location dans le quartier de Saly avec un loyer maximal de 350 000 F.\n\nSouhaitez‑vous élargir votre recherche à d’autres quartiers de Dakar (par exemple Almadies, Fann, Liberté 6, Mermoz, Ngor, Ouakam, Plateau, Point E, Sacré‑Cœur ou Yoff) ou envisager un budget différent ? Nous serons ravis de vous proposer des biens correspondants à vos critères.\n\nDans l’attente de votre retour, je vous souhaite une excellente journée.\n\nCordialement,  \nL’équipe de Sama Kër Immobilier."
+    },
+    {
+      "id": "D05",
+      "texte": "Une villa à 1 million maximum",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-028"
+      ],
+      "biens_cites": [
+        "SK-028"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande.\n\nNous avons identifié une villa correspondant à votre critère de budget (maximum 1 000 000 F CFA) :\n\n- **Référence** : **SK-028**  \n- **Quartier** : Yoff  \n- **Loyer** : 900 000 F CFA par mois  \n- **Nombre de pièces** : 5  \n\nCette villa est disponible et se situe à la Cité YF‑12, Yoff. Elle comprend notamment un garage et une cour.\n\nSi ce bien vous intéresse, nous vous invitons à nous le confirmer afin qu’un de nos conseillers puisse vous proposer des créneaux de visite adaptés à votre emploi du temps. Vous serez alors contacté(e) rapidement pour finaliser la prise de rendez‑vous.\n\nNous restons à votre disposition pour toute information complémentaire.\n\nCordialement,  \nL’équipe de Sama Kër Immobilier."
+    },
+    {
+      "id": "D06",
+      "texte": "Une chambre à Ouakam",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-016"
+      ],
+      "biens_cites": [
+        "SK-016"
+      ],
+      "reponse": "Bonjour,\n\nNous vous remercions pour votre demande.\n\nVoici le bien correspondant à votre recherche d’une chambre à Ouakam :\n\n| Référence | Quartier | Loyer (F CFA) | Pièces | Adresse | Meublé |\n|-----------|----------|---------------|--------|---------|--------|\n| **SK-016** | Ouakam | 75 000 F | 1 | Rue OK‑7, Ouakam | Oui |\n\nCe logement est actuellement disponible.\n\nSi ce bien vous intéresse, nous transmettons immédiatement votre demande à l’un de nos conseillers. Celui‑ci vous contactera rapidement pour confirmer les disponibilités et convenir d’un créneau de visite qui vous convient.\n\nN’hésitez pas à nous préciser d’éventuels critères supplémentaires (budget, type de bail, etc.) afin que nous puissions vous proposer d’autres options si besoin.\n\nCordialement,\n\nL’équipe de Sama Kër Immobilier  \n[contact@samakër.com]   | +221 33 XXX XX XX   | www.samakër.com   | Dakar, Sénégal   \n\n---  \n*Ce message a été généré automatiquement. Un conseiller vous contactera sous peu.*"
+    },
+    {
+      "id": "D07",
+      "texte": "Un F3 aux Almadies à moins de 500 000 F",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [],
+      "biens_cites": [],
+      "reponse": "Bonjour,\n\nNous vous remercions pour votre demande.\n\nAprès vérification de notre catalogue, aucun bien disponible ne correspond actuellement à vos critères (F3, quartier Almadies, loyer ≤ 500 000 F CFA).\n\nSouhaitez‑vous élargir votre recherche ? Par exemple :\n- augmenter légèrement le budget,\n- envisager un autre quartier voisin,\n- ou considérer un nombre de pièces différent (F2 ou F4).\n\nNous restons à votre disposition pour vous proposer des alternatives adaptées.\n\nCordialement,  \nL’équipe de Sama Kër Immobilier."
+    },
+    {
+      "id": "D08",
+      "texte": "Un F2 meublé au Plateau",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-020"
+      ],
+      "biens_cites": [
+        "SK-020"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande.\n\nNous avons identifié un bien correspondant à vos critères :\n\n- **Référence** : **SK-020**  \n- **Type** : Appartement  \n- **Quartier** : Plateau  \n- **Loyer** : 350 000 F CFA par mois  \n- **Nombre de pièces** : 2 (F2)  \n- **Meublé** : Oui  \n- **Adresse** : Rue PL-30, Plateau  \n\nCe logement est actuellement disponible.\n\nAfin d’organiser une visite, un de nos conseillers vous contactera rapidement pour vous proposer les créneaux horaires disponibles et valider votre rendez‑vous.\n\nN’hésitez pas à nous signaler si vous avez d’autres critères ou questions ; nous transmettrons votre demande à notre équipe.\n\nCordialement,\n\nL’équipe de Sama Kër Immobilier  \n📞 +221 33 XXX XX XX  \n✉️ contact@samakër.com  "
+    },
+    {
+      "id": "D09",
+      "texte": "Un appartement à Yoff",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-027"
+      ],
+      "biens_cites": [
+        "SK-027"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande concernant un appartement à Yoff. Nous avons actuellement un bien correspondant à vos critères :\n\n- **Référence** : **SK-027**  \n- **Quartier** : Yoff (Rue YF‑5, Yoff Tonghor)  \n- **Loyer** : 230 000 F CFA par mois  \n- **Nombre de pièces** : 3 (F3)  \n- **Meublé** : Non  \n- **Description** : Appartement F3 à dix minutes de la plage de Yoff, disponible immédiatement.\n\nSi ce bien vous intéresse, nous transmettrons votre demande à l’un de nos conseillers qui vous contactera rapidement pour confirmer la disponibilité et vous proposer des créneaux de visite adaptés à votre emploi du temps.\n\nN’hésitez pas à nous préciser d’éventuelles autres exigences (budget maximal, besoin de mobilier, etc.) afin que nous puissions vous proposer d’autres options si nécessaire.\n\nCordialement,\n\nL’équipe de Sama Kër Immobilier  \n[contact@samakër.com]  \n+221 33 XXX XX XX   (service clientèle)  "
+    },
+    {
+      "id": "D10",
+      "texte": "Un F3 à Sacré-Coeur pour 300 000 F maximum",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-021"
+      ],
+      "biens_cites": [
+        "SK-021"
+      ],
+      "reponse": "Bonjour,\n\nMerci pour votre demande.\n\nNous avons trouvé un bien correspondant à vos critères :\n\n- **Référence** : **SK-021**  \n- **Quartier** : Sacré‑Cœur  \n- **Loyer** : 280 000 F CFA par mois  \n- **Nombre de pièces** : 3 (F3)  \n- **Type** : Appartement (non meublé)  \n- **Adresse** : Sacré‑Cœur 3, villa 112  \n\nCe logement est actuellement disponible.\n\nPour organiser une visite, un de nos conseillers vous contactera afin de vous proposer les créneaux disponibles et de confirmer la prise de rendez‑vous.\n\nN’hésitez pas à nous faire part de toute question supplémentaire ou de vos préférences de date, et nous nous ferons un plaisir de vous assister.\n\nCordialement,\n\nL’équipe de Sama Kër Immobilier  \n[contact@samakër.com]   (ou le numéro de téléphone habituel)  "
+    }
+  ]
+}
