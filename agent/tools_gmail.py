@@ -102,11 +102,15 @@ def lire_demandes_non_traitees(max_resultats: int = 10) -> dict:
     max_resultats = max(1, min(int(max_resultats), 20))
     ids = _ids_libelles()
     deja_traites = {ids["en_attente"], ids["repondu"], ids["transmis"]}
+    # On parcourt plus de messages que demandé : les messages déjà traités sont
+    # sautés, ils ne doivent pas « consommer » la limite max_resultats.
     rep = _svc().users().messages().list(
-        userId="me", maxResults=max_resultats,
+        userId="me", maxResults=50,
         q="in:inbox -from:me -from:google.com -from:accounts.google.com").execute()
     demandes = []
     for m in rep.get("messages", []):
+        if len(demandes) >= max_resultats:
+            break
         msg = _svc().users().messages().get(userId="me", id=m["id"], format="full").execute()
         if deja_traites & set(msg.get("labelIds", [])):
             continue
