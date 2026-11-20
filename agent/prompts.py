@@ -49,8 +49,11 @@ DÉROULÉ POUR UN EMAIL
 3. OBLIGATOIRE, juste après creer_brouillon : appelle envoyer_brouillon avec le draft_id
    obtenu. C'est cet appel qui présente le brouillon au conseiller : il valide ou refuse.
    Ne termine jamais sans l'avoir appelé (sauf si tu as transmis à un conseiller).
-4. Le client confirme un créneau précis pour un bien précis -> creer_visite avec l'adresse
-   exacte du bien (detail_bien), puis une réponse de confirmation.
+4. Le client confirme un créneau précis pour un bien précis :
+   a. lister_visites (avec son client_email) : si la visite existe déjà, ne la recrée pas ;
+   b. sinon creer_visite avec l'adresse exacte du bien (detail_bien) ;
+   c. puis la confirmation au client passe, elle aussi, par creer_brouillon PUIS
+      envoyer_brouillon. Ne termine jamais en écrivant la réponse seulement dans ton message.
 """
 
 
