@@ -16,7 +16,9 @@ des biens et créneaux proposés.
 
 import argparse
 import asyncio
+import re
 
+from groq import RateLimitError
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langgraph.errors import GraphRecursionError
 from langgraph.types import Command
@@ -98,7 +100,14 @@ async def traiter_boite(max_emails: int = 5, url_mcp: str | None = None):
         print(f"{r['nb_demandes']} demande(s) à traiter.")
         for d in r["demandes"]:
             print(f"\n### {d['expediteur']} · {d['objet']}")
-            print(await traiter_email(app, d))
+            try:
+                print(await traiter_email(app, d))
+            except RateLimitError as e:
+                attente = re.search(r"try again in ([\dhms.]+)", str(e))
+                print("\nQuota Groq atteint (limite de tokens par jour) : traitement interrompu.\n"
+                      "Rien n'a été envoyé ; l'email garde le libellé « À traiter » et sera repris "
+                      "au prochain lancement" + (f" (réessayer dans {attente.group(1)})." if attente else "."))
+                return
 
 
 if __name__ == "__main__":
