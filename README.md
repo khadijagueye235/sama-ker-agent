@@ -85,7 +85,7 @@ flowchart LR
 
     subgraph agent["Agent (LangGraph)"]
         llm["LLM<br/>Groq · GPT-OSS 120B"]
-        tg["Outils Gmail<br/>agent/tools_google.py"]
+        tg["Outils Gmail<br/>agent/tools_gmail.py"]
         tc["Outils Calendar<br/>agent/tools_calendar.py"]
         val{{"Validation humaine<br/>agent/validation.py"}}
     end
@@ -577,18 +577,24 @@ Résultat obtenu sur les agendas réels :
 
 ## 10. Brique 3 · Gmail
 
-> **En cours (rôle B).** Le code de départ (lecture, brouillon dans le bon fil, libellés) a été
-> testé sur la boîte de test ; il reste à l'intégrer dans `agent/tools_google.py`.
+Réalisé par le rôle B dans [agent/tools_gmail.py](agent/tools_gmail.py), avec une démonstration
+dans [agent/demo_gmail.py](agent/demo_gmail.py) :
 
-| Fonction prévue | Type | Rôle |
+```bash
+python -m agent.demo_gmail                 # lecture + brouillon dans le fil
+python -m agent.demo_gmail --envoyer       # + envoi après validation au clavier (o/N)
+python -m agent.demo_gmail --transmettre   # transmission à un conseiller (hors périmètre)
+```
+
+| Fonction | Type | Rôle |
 |---|---|---|
-| `lire_demandes_non_traitees()` | lecture | emails sans libellé « Sama Kër/… », corps décodé |
+| `lire_demandes_non_traitees(max_resultats?)` | lecture | emails sans libellé « Sama Kër/… », corps décodé |
 | `creer_brouillon(message_id, thread_id, ...)` | écriture sans effet externe | brouillon **dans le fil d'origine** (`threadId`, `In-Reply-To`, `References`, objet « Re: ») |
 | `envoyer_brouillon(draft_id, message_id)` | **écriture, derrière la validation** | envoi puis libellé « Répondu » |
 | `transmettre_conseiller(message_id, motif)` | écriture | libellé « Transmis à un conseiller » |
 
 **Résistance à l'injection.** Le contenu d'un email est une **donnée, jamais une instruction** :
-il est placé entre balises `<email>…</email>` dans le prompt, le prompt système le rappelle, et
+`presenter_email()` le place entre balises `<email>…</email>` dans le message donné au modèle, le prompt système le rappelle, et
 de toute façon aucune action d'écriture ne peut s'exécuter sans le conseiller (cas E13 et E14 du
 jeu d'évaluation).
 
@@ -679,7 +685,9 @@ sama-ker-agent/
 │   ├── tools_calendar.py  Brique 2 · créneaux et visites
 │   ├── validation.py      validation humaine (console / interrupt)
 │   ├── demo_calendar.py   démonstration de l'exercice 3
-│   ├── tools_google.py    Brique 3 · Gmail (rôle B, en cours)
+│   ├── tools_gmail.py     Brique 3 · Gmail (rôle B)
+│   ├── demo_gmail.py      démonstration de l'exercice 4
+│   ├── traces.py          traces JSONL des exécutions (rôle C)
 │   ├── prompts.py         prompt système (rôle C)
 │   ├── graph.py           graphe LangGraph (rôle C)
 │   └── main.py            point d'entrée de l'agent (rôle C)
