@@ -640,6 +640,7 @@ outils = outils_langgraph(OUTILS_LECTURE, OUTILS_ECRITURE)   # écriture = inter
 | [eval/demandes_ex1.json](eval/demandes_ex1.json) | 10 demandes et les biens **exacts** attendus (Ex1, Ex2) |
 | [eval/emails_test.json](eval/emails_test.json) | 15 emails complets avec le résultat attendu (Ex4, Ex6) |
 | [eval/run_eval.py](eval/run_eval.py) | rejoue les deux jeux, note chaque cas et produit le tableau de résultats |
+| [agent/adaptateur_eval.py](agent/adaptateur_eval.py) | branche l'agent sur l'évaluation (Gmail factice, aucune écriture réelle) : `python -m eval.run_eval --agent agent.adaptateur_eval --label avant --pause 5` |
 | `eval/results/` | résultats avant / après correction |
 
 | Catégorie | Emails |
@@ -688,6 +689,7 @@ sama-ker-agent/
 │   ├── tools_gmail.py     Brique 3 · Gmail (rôle B)
 │   ├── demo_gmail.py      démonstration de l'exercice 4
 │   ├── traces.py          traces JSONL des exécutions (rôle C)
+│   ├── adaptateur_eval.py fait jouer à l'agent les emails fictifs de l'évaluation
 │   ├── prompts.py         prompt système (rôle C)
 │   ├── graph.py           graphe LangGraph (rôle C)
 │   └── main.py            point d'entrée de l'agent (rôle C)
