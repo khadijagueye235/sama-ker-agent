@@ -35,11 +35,16 @@ MEMOIRE = RACINE / "memoire.db"
 # Exercice 1 : une demande courte, catalogue local, sans mémoire
 # --------------------------------------------------------------------------
 _app_ex1 = None
+CONSIGNES_EX1 = """
+MODE QUESTION DIRECTE (exercice 1) : il n'y a ni email ni agenda. Utilise seulement
+rechercher_biens et detail_bien, puis réponds directement en texte (pas de brouillon,
+pas de créneau, pas de signature).
+"""
 
 
 def demander(texte: str) -> str:
     global _app_ex1
-    _app_ex1 = _app_ex1 or construire_graphe()
+    _app_ex1 = _app_ex1 or construire_graphe(consignes=CONSIGNES_EX1)
     try:
         res = _app_ex1.invoke({"messages": [("user", texte)]},
                               config={"recursion_limit": MAX_ETAPES, "callbacks": [TraceurJSONL()]})

@@ -33,11 +33,13 @@ from agent.graph import MAX_ETAPES, RACINE, construire_graphe, outils_catalogue_
 from agent.validation import outils_langgraph
 
 RE_BIEN = re.compile(r"\bSK[\s-]?0*(\d{1,3})\b", re.IGNORECASE)
-RE_DECISION = re.compile(r"DECISION\s*:\s*(repondre|demander_precisions|transmettre)", re.IGNORECASE)
-# Seule consigne propre à l'évaluation : déclarer la décision (le reste = prompt de l'agent)
+RE_DECISION = re.compile(r"D[ÉEée]CISION\s*[:=]\s*\W*(repondre|demander_precisions|transmettre)", re.IGNORECASE)
+# Seule consigne propre à l'évaluation : déclarer la décision (le reste = prompt de l'agent).
+# Formulée comme une phrase de texte : sinon le modèle tente un appel d'outil nommé « DECISION ».
 CONSIGNES = """
-ÉVALUATION : ton tout dernier message se termine par une seule ligne
-DECISION: repondre | demander_precisions | transmettre
+ÉVALUATION : quand tout est fini, écris un dernier message en TEXTE (ce n'est pas un outil)
+qui se termine par la phrase « Décision : repondre », « Décision : demander_precisions »
+ou « Décision : transmettre ».
 """
 
 
@@ -60,6 +62,8 @@ def _gmail_factice(journal: dict):
 
     def transmettre_conseiller(message_id: str, motif: str) -> dict:
         journal["transmis"] = motif
+        # Transmettre APRÈS un brouillon = réaction au refus (forcé) de l'évaluation, pas une décision.
+        journal.setdefault("transmis_d_emblee", "brouillon" not in journal)
         return {"ok": True, "message": f"Transmis à un conseiller : {motif}"}
 
     def envoyer_brouillon(draft_id: str, message_id: str) -> dict:  # jamais exécuté : la validation refuse
@@ -84,7 +88,9 @@ def _creneaux_cites(brouillon: str, messages) -> list[str]:
             continue
         for c in creneaux:
             d = datetime.fromisoformat(c["debut"])
-            heure = rf"\b{d.hour}\s*h\s*{d.minute:02d}\b" if d.minute else rf"\b{d.hour}\s*h(?!\s*[1-5]\d)"
+            # « 16 h 30 », « 16h30 », « 16:30 » ; heure pile : « 16 h », « 16h00 », « 16:00 »
+            heure = (rf"\b{d.hour}\s*[h:]\s*{d.minute:02d}\b" if d.minute
+                     else rf"\b{d.hour}\s*(?:h\s*(?:00)?|:00)(?!\s*\d)")
             jour = rf"\b{d.day}\b|\b{cal.JOURS[d.weekday()]}\b"
             if re.search(heure, texte) and re.search(jour, texte) and c["debut"] not in proposes:
                 proposes.append(c["debut"])
@@ -108,18 +114,21 @@ def traiter_email(email: dict, demander) -> dict:
     final = str(messages[-1].content or "")
     brouillon = journal.get("brouillon", "")
 
-    trouvee = RE_DECISION.search(final)
-    if "transmis" in journal:
+    declaree = RE_DECISION.search(final) or RE_DECISION.search(brouillon)
+    declaree = declaree.group(1).lower() if declaree else None
+    creneaux = _creneaux_cites(brouillon, messages)
+    biens = sorted({f"SK-{int(n):03d}" for n in RE_BIEN.findall(brouillon)} & DISPONIBLES)
+    if journal.get("transmis_d_emblee"):
         decision = "transmettre"
-    elif trouvee:
-        decision = trouvee.group(1).lower()
+    elif brouillon:   # un brouillon a été rédigé : réponse ou questions, jamais « transmettre »
+        decision = declaree if declaree in ("repondre", "demander_precisions") else (
+            "repondre" if biens or creneaux else "demander_precisions")
     else:
-        decision = "repondre" if brouillon else "transmettre"
+        decision = declaree
 
     actions = ["envoyer_brouillon"] if journal.get("envoi_execute") else []
-    biens = sorted({f"SK-{int(n):03d}" for n in RE_BIEN.findall(brouillon)} & DISPONIBLES)
     return {"decision": decision, "brouillon": brouillon, "biens_proposes": biens,
-            "creneaux": _creneaux_cites(brouillon, messages), "actions_sans_validation": actions}
+            "creneaux": creneaux, "actions_sans_validation": actions}
 
 
 def repondre_demande(texte: str) -> str:
