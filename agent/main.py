@@ -18,7 +18,7 @@ import argparse
 import asyncio
 import re
 
-from groq import RateLimitError
+from groq import APIStatusError
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langgraph.errors import GraphRecursionError
 from langgraph.types import Command
@@ -56,7 +56,19 @@ def demander(texte: str) -> str:
 # --------------------------------------------------------------------------
 # Agent complet : boîte Gmail, validation humaine, reprise
 # --------------------------------------------------------------------------
+CITATION = re.compile(r"^\s*(Le .{5,120} a écrit\s*:|On .{5,120} wrote\s*:)", re.M)
+
+
+def sans_citation(corps: str) -> str:
+    """Retire l'ancien message cité sous une réponse (« Le ven. ... a écrit : » et les lignes « > »).
+    L'agent connaît déjà ce message grâce à la mémoire du fil : inutile de le renvoyer au modèle."""
+    m = CITATION.search(corps)
+    corps = corps[:m.start()] if m else corps
+    return "\n".join(l for l in corps.splitlines() if not l.lstrip().startswith(">")).strip()
+
+
 def message_pour(d: dict) -> str:
+    d = {**d, "corps": sans_citation(d["corps"])}
     return (gmail.presenter_email(d)
             + f"\nIdentifiants : message_id={d['message_id']}, thread_id={d['thread_id']}, "
               f"rfc_message_id={d['rfc_message_id']}")
@@ -107,11 +119,15 @@ async def traiter_boite(max_emails: int = 5, url_mcp: str | None = None):
             print(f"\n### {d['expediteur']} · {d['objet']}")
             try:
                 print(await traiter_email(app, d))
-            except RateLimitError as e:
+            except APIStatusError as e:
+                if e.status_code not in (413, 429):
+                    raise
                 attente = re.search(r"try again in ([\dhms.]+)", str(e))
-                print("\nQuota Groq atteint (limite de tokens par jour) : traitement interrompu.\n"
-                      "Rien n'a été envoyé ; l'email garde le libellé « À traiter » et sera repris "
-                      "au prochain lancement" + (f" (réessayer dans {attente.group(1)})." if attente else "."))
+                print("\nLimite Groq atteinte (" + ("requête trop longue" if e.status_code == 413 else
+                      "quota de tokens") + ") : traitement interrompu.\n"
+                      "Seules les actions déjà validées par le conseiller ont été faites ; l'email garde "
+                      "le libellé « À traiter » et sera repris au prochain lancement"
+                      + (f" (réessayer dans {attente.group(1)})." if attente else "."))
                 return
 
 

@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-from langchain_core.messages import SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.tools import StructuredTool
 from langchain_groq import ChatGroq
 from langgraph.graph import START, MessagesState, StateGraph
@@ -33,6 +33,21 @@ def outils_catalogue_locaux() -> list[StructuredTool]:
     return [StructuredTool.from_function(f, parse_docstring=True) for f in (rechercher_biens, detail_bien)]
 
 
+def historique_compact(messages: list) -> list:
+    """Ce que le modèle relit à chaque appel.
+
+    La mémoire garde tout le fil, mais Groq limite la taille d'une requête (8 000 tokens
+    par minute en offre gratuite). Pour les échanges PRÉCÉDENTS du fil, on ne renvoie
+    que les emails du client et les réponses finales de l'agent : les appels d'outils
+    et leurs résultats (listes de biens, de créneaux...) sont résumés dans ces réponses.
+    L'échange en cours (depuis le dernier email du client) est gardé en entier.
+    """
+    dernier = max((i for i, m in enumerate(messages) if isinstance(m, HumanMessage)), default=0)
+    anciens = [m for m in messages[:dernier]
+               if isinstance(m, HumanMessage) or (isinstance(m, AIMessage) and not m.tool_calls)]
+    return anciens + messages[dernier:]
+
+
 def construire_graphe(outils=None, checkpointer=None, consignes: str = ""):
     """Compile le graphe.
 
@@ -46,7 +61,7 @@ def construire_graphe(outils=None, checkpointer=None, consignes: str = ""):
 
     def appeler_modele(state: MessagesState):
         systeme = SystemMessage(prompt_systeme() + consignes)
-        return {"messages": [llm.invoke([systeme] + state["messages"])]}
+        return {"messages": [llm.invoke([systeme] + historique_compact(state["messages"]))]}
 
     g = StateGraph(MessagesState)
     g.add_node("agent", appeler_modele)
