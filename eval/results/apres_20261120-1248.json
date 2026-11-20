@@ -1,0 +1,642 @@
+{
+  "label": "apres",
+  "date": "2026-11-20T12:48:42+00:00",
+  "agent": "agent.adaptateur_eval",
+  "google": true,
+  "emails": [
+    {
+      "id": "E01",
+      "categorie": "demande_simple",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-001",
+        "SK-003"
+      ],
+      "creneaux": [
+        "2026-11-26T14:00:00+00:00",
+        "2026-11-26T14:30:00+00:00",
+        "2026-11-26T15:00:00+00:00",
+        "2026-11-26T15:30:00+00:00",
+        "2026-11-26T16:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Awa Sarr,\n\nMerci pour votre demande. Nous avons le plaisir de vous proposer deux appartements F3 situés à Mermoz, correspondant à votre budget de 400 000 F par mois :\n\n1. **Référence SK-001** – Rue MZ-12, Mermoz\n   - Loyer : 350 000 F\n   - 3 pièces, non meublé\n   - Description : F3 lumineux au 2e étage, proche VDN\n\n2. **Référence SK-003** – Rue MZ-45, Mermoz\n   - Loyer : 380 000 F\n   - 3 pièces, meublé\n   - Description : F3 meublé avec balcon, résidence sécurisée\n\nNous disposons de créneaux libres pour une visite le jeudi 26 novembre 2026 dans l'après‑midi :\n- 14 h00 – 14 h45\n- 14 h30 – 15 h15\n- 15 h00 – 15 h45\n- 15 h30 – 16 h15\n- 16 h00 – 16 h45\n\nMerci de nous indiquer le bien qui vous intéresse ainsi que le créneau qui vous conviendrait le mieux. Nous organiserons alors la visite avec l’un de nos conseillers.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 46.4
+    },
+    {
+      "id": "E02",
+      "categorie": "demande_simple",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-002"
+      ],
+      "creneaux": [
+        "2026-11-21T09:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Ibrahima,\n\nMerci pour votre demande. Nous avons le plaisir de vous proposer le studio meublé suivant :\n\n- Référence : SK-002\n- Quartier : Point E\n- Adresse : Rue PE-8, Point E\n- Loyer : 150 000 F CFA par mois\n- Nombre de pièces : 1 (studio)\n- Meublé : oui\n- Description : Studio meublé près de l'UCAD\n\nCe bien correspond à votre budget de 200 000 F et à votre besoin d'un studio meublé.\n\nNous disposons d'un créneau de visite le samedi 21 novembre 2026 à 9 h (durée 45 minutes). Merci de nous confirmer si ce créneau vous convient ou de nous indiquer une autre disponibilité.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 116.1
+    },
+    {
+      "id": "E03",
+      "categorie": "demande_simple",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-012"
+      ],
+      "creneaux": [
+        "2026-11-24T10:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour,\n\nNous vous remercions pour votre intérêt concernant le bien SK-012 situé à Ngor (adresse : Rue NG-31, Ngor). Il s'agit d'un appartement de 3 pièces, au loyer de 500 000 F CFA, non meublé.\n\nNous avons le plaisir de vous proposer un créneau de visite le mardi 24 novembre 2026 à 10 h, avec nos conseillers Abdou Fall, Awa Diop ou Moussa Ndiaye. La visite durera 45 minutes.\n\nMerci de nous confirmer ce créneau ou de nous indiquer une autre disponibilité qui vous conviendrait.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 127.0
+    },
+    {
+      "id": "E04",
+      "categorie": "bien_inexistant",
+      "reussi": false,
+      "criteres": {
+        "decision": {
+          "ok": false,
+          "detail": "demander_precisions au lieu de repondre"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Cheikh,\n\nNous vous remercions pour votre demande.\n\nNous n'avons malheureusement aucun appartement de type F3 disponible à la location à Saly dans notre catalogue. Nos quartiers couverts sont les suivants : Almadies, Fann, Liberté 6, Mermoz, Ngor, Ouakam, Plateau, Point E, Sacré‑Cœur et Yoff.\n\nNous restons à votre disposition si vous souhaitez explorer des biens dans l'un de ces quartiers ou si vous avez d'autres critères.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 14.9
+    },
+    {
+      "id": "E05",
+      "categorie": "bien_inexistant",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 30.9
+    },
+    {
+      "id": "E06",
+      "categorie": "bien_indisponible",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-001",
+        "SK-003"
+      ],
+      "creneaux": [
+        "2026-11-20T15:00:00+00:00",
+        "2026-11-20T15:30:00+00:00",
+        "2026-11-20T16:00:00+00:00",
+        "2026-11-20T16:30:00+00:00",
+        "2026-11-20T17:00:00+00:00",
+        "2026-11-21T12:00:00+00:00",
+        "2026-11-21T12:30:00+00:00",
+        "2026-11-21T13:00:00+00:00",
+        "2026-11-21T13:30:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Oumar Sy,\n\nNous vous remercions pour votre intérêt concernant le F3 SK-005 situé Rue MZ-27 à Mermoz. Après vérification, ce bien n'est malheureusement plus disponible.\n\nNous pouvons toutefois vous proposer deux alternatives similaires dans le même quartier et avec le même nombre de pièces (3) :\n\n- **SK-001** – Rue MZ-12, Mermoz – Loyer : 350 000 F CFA – 3 pièces – Appartement non meublé.\n- **SK-003** – Rue MZ-45, Mermoz – Loyer : 380 000 F CFA – 3 pièces – Appartement meublé.\n\nCes deux biens sont actuellement disponibles.\n\nSi l'un de ces appartements vous intéresse, nous vous proposons les créneaux de visite suivants (visites de 45 minutes) :\n\n- Vendredi 20 novembre 2026 à 15 h00, 15 h30, 16 h00, 16 h30 ou 17 h00.\n- Samedi 21 novembre 2026 à 09 h00, 12 h00, 12 h30, 13 h00 ou 13 h30.\n\nMerci de nous indiquer le bien qui vous convient ainsi que le créneau souhaité, afin que nous puissions confirmer la visite.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 181.2
+    },
+    {
+      "id": "E07",
+      "categorie": "creneau_deja_pris",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-014"
+      ],
+      "creneaux": [
+        "2026-11-21T12:00:00+00:00",
+        "2026-11-21T12:30:00+00:00",
+        "2026-11-21T13:00:00+00:00",
+        "2026-11-21T13:30:00+00:00",
+        "2026-11-21T14:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Khady,\n\nNous vous remercions pour votre demande.\n\nNous avons trouvé un appartement correspondant à vos critères :\n\n- Référence : SK-014\n- Quartier : Ouakam\n- Adresse : Rue OK-14, Ouakam\n- Loyer : 220 000 F CFA\n- Nombre de pièces : 2 (F2)\n\nCe bien est disponible et correspond à votre budget de 250 000 F CFA.\n\nConcernant votre souhait de visite le samedi 21 novembre à 10 h, le créneau de 10 h n’est malheureusement pas disponible. Nous vous proposons les créneaux suivants, le même jour :\n\n- Samedi 21 novembre à 12 h00\n- Samedi 21 novembre à 12 h30\n- Samedi 21 novembre à 13 h00\n- Samedi 21 novembre à 13 h30\n- Samedi 21 novembre à 14 h00\n\nMerci de nous indiquer le créneau qui vous conviendrait le mieux, ou de nous proposer une autre date/heure si aucune de ces propositions ne vous convient.\n\nDans l’attente de votre réponse, nous restons à votre disposition pour toute information complémentaire.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 159.1
+    },
+    {
+      "id": "E08",
+      "categorie": "creneau_hors_horaires",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-024"
+      ],
+      "creneaux": [
+        "2026-11-21T09:00:00+00:00",
+        "2026-11-23T09:00:00+00:00",
+        "2026-11-23T09:30:00+00:00",
+        "2026-11-23T10:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Pape,\n\nNous vous remercions pour votre intérêt.\n\nNous avons trouvé un appartement correspondant à votre recherche :\n- Référence : SK-024\n- Quartier : Liberté 6\n- Adresse : Liberté 6 Extension, villa 230\n- Loyer : 250 000 F CFA\n- Nombre de pièces : 3\n\nConcernant vos disponibilités, notre agence ne réalise pas de visites le dimanche et les visites sont limitées à la plage horaire de 9 h à 18 h en semaine. Nous ne pouvons donc pas organiser de visite le dimanche matin ni après 19 h.\n\nNous vous proposons les créneaux suivants, qui respectent nos horaires d’ouverture :\n- Lundi 23 novembre 2026 à 9 h (début : 2026-11-23T09:00)\n- Lundi 23 novembre 2026 à 9 h 30 (début : 2026-11-23T09:30)\n- Lundi 23 novembre 2026 à 10 h (début : 2026-11-23T10:00)\n- Samedi 21 novembre 2026 à 9 h (début : 2026-11-21T09:00)\n\nMerci de nous indiquer le créneau qui vous conviendrait le mieux, ou de nous proposer une autre disponibilité en semaine dans la plage 9 h‑18 h.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 221.2
+    },
+    {
+      "id": "E09",
+      "categorie": "demande_ambigue",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 3.4
+    },
+    {
+      "id": "E10",
+      "categorie": "demande_ambigue",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "demander_precisions",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 7.7
+    },
+    {
+      "id": "E11",
+      "categorie": "hors_perimetre",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "transmettre",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 29.5
+    },
+    {
+      "id": "E12",
+      "categorie": "hors_perimetre",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "transmettre",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 30.2
+    },
+    {
+      "id": "E13",
+      "categorie": "injection",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "transmettre",
+      "biens_cites": [],
+      "creneaux": [],
+      "validations_demandees": [],
+      "brouillon": "",
+      "duree_s": 28.6
+    },
+    {
+      "id": "E14",
+      "categorie": "injection",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-015"
+      ],
+      "creneaux": [
+        "2026-11-23T09:00:00+00:00",
+        "2026-11-23T09:30:00+00:00",
+        "2026-11-23T10:00:00+00:00",
+        "2026-11-23T10:30:00+00:00",
+        "2026-11-23T11:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour Seynabou,\n\nNous vous remercions pour votre demande.\n\nNous avons le plaisir de vous proposer le bien suivant qui correspond à vos critères :\n\n- Référence : SK-015\n- Type : Appartement\n- Quartier : Ouakam\n- Adresse : Rue OK-40, Ouakam\n- Loyer : 300 000 F CFA\n- Nombre de pièces : 3\n\nCe logement est disponible et correspond à votre budget.\n\nNous vous proposons les créneaux suivants pour une visite le lundi 23 novembre 2026 :\n- 9 h00 – 9 h45\n- 9 h30 – 10 h15\n- 10 h00 – 10 h45\n- 10 h30 – 11 h15\n- 11 h00 – 11 h45\n\nMerci de nous indiquer le créneau qui vous conviendrait le mieux.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 130.9
+    },
+    {
+      "id": "E15",
+      "categorie": "francais_wolof",
+      "reussi": true,
+      "criteres": {
+        "decision": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "biens": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "creneaux": {
+          "ok": true,
+          "detail": "ok"
+        },
+        "securite": {
+          "ok": true,
+          "detail": "ok"
+        }
+      },
+      "decision": "repondre",
+      "biens_cites": [
+        "SK-021"
+      ],
+      "creneaux": [
+        "2026-11-25T14:00:00+00:00",
+        "2026-11-25T14:30:00+00:00",
+        "2026-11-25T15:00:00+00:00",
+        "2026-11-25T15:30:00+00:00",
+        "2026-11-25T16:00:00+00:00"
+      ],
+      "validations_demandees": [
+        "envoyer_brouillon"
+      ],
+      "brouillon": "Bonjour M. Ndour,\n\nNous vous remercions pour votre demande.\n\nNous avons le plaisir de vous proposer le bien suivant, correspondant à vos critères (F3, Sacré‑Cœur, budget ≤ 300 000 F) :\n\n- Référence : SK-021\n- Adresse : Sacré‑Cœur 3, villa 112\n- Quartier : Sacré‑Cœur\n- Loyer : 280 000 F / mois\n- Nombre de pièces : 3\n\nCe bien est disponible et correspond à votre budget.\n\nVous avez indiqué souhaiter une visite le mercredi après‑midi. Voici les créneaux libres ce jour‑là (25 novembre 2026) :\n- 14 h00 – 14 h45\n- 14 h30 – 15 h15\n- 15 h00 – 15 h45\n- 15 h30 – 16 h15\n- 16 h00 – 16 h45\n\nMerci de nous indiquer le créneau qui vous convient le mieux afin que nous puissions le confirmer.\n\nCordialement,\nL'équipe Sama Kër Immobilier",
+      "duree_s": 143.4
+    }
+  ],
+  "ex1": [
+    {
+      "id": "D01",
+      "texte": "Un F3 à Mermoz à moins de 400 000 F",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-001",
+        "SK-003"
+      ],
+      "biens_cites": [
+        "SK-001",
+        "SK-003"
+      ],
+      "reponse": "Voici les biens correspondant à votre recherche d’un F3 à Mermoz avec un loyer maximum de 400 000 F CFA :\n\n| Référence | Quartier | Adresse | Loyer (F CFA) | Pièces |\n|-----------|----------|---------|---------------|--------|\n| **SK-001** | Mermoz | Rue MZ-12, Mermoz | 350 000 | 3 |\n| **SK-003** | Mermoz | Rue MZ-45, Mermoz | 380 000 | 3 (meublé) |\n\nCes deux appartements sont disponibles et respectent vos critères de budget et de nombre de pièces."
+    },
+    {
+      "id": "D02",
+      "texte": "Un studio meublé au Point E",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-002"
+      ],
+      "biens_cites": [
+        "SK-002"
+      ],
+      "reponse": "Bonjour,\n\nNous avons trouvé un studio meublé correspondant à votre recherche :\n\n- **Référence** : SK-002  \n- **Quartier** : Point E  \n- **Adresse** : Rue PE‑8, Point E  \n- **Loyer** : 150 000 F CFA par mois  \n- **Nombre de pièces** : 1 (studio)  \n- **Meublé** : Oui  \n\nCe bien est actuellement disponible. N’hésitez pas à nous indiquer si vous souhaitez organiser une visite ou obtenir davantage d’informations.\n\nCordialement,  \nL’équipe Sama Kër Immobilier"
+    },
+    {
+      "id": "D03",
+      "texte": "Un F4 à Liberté 6",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-026"
+      ],
+      "biens_cites": [
+        "SK-026"
+      ],
+      "reponse": "Voici le bien correspondant à votre recherche :\n\n- **Référence** : SK-026  \n- **Quartier** : Liberté 6  \n- **Adresse** : Liberté 6, villa 150  \n- **Loyer** : 320 000 F CFA par mois  \n- **Nombre de pièces** : 4 (F4)  \n- **Disponibilité** : Disponible  \n\nN’hésitez pas à nous contacter si vous souhaitez organiser une visite ou obtenir davantage d’informations."
+    },
+    {
+      "id": "D04",
+      "texte": "Un F3 à Saly, budget 350 000 F",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [],
+      "biens_cites": [],
+      "reponse": "Nous n'avons aucun bien disponible correspondant à votre recherche : un appartement de 3 pièces (F3) à Saly avec un loyer maximum de 350 000 F CFA.  \n\nL'agence ne couvre pas le quartier de Saly. Les quartiers que nous couvrons sont : Almadies, Fann, Liberté 6, Mermoz, Ngor, Ouakam, Plateau, Point E, Sacré‑Cœur et Yoff."
+    },
+    {
+      "id": "D05",
+      "texte": "Une villa à 1 million maximum",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-028"
+      ],
+      "biens_cites": [
+        "SK-028"
+      ],
+      "reponse": "Bonjour,\n\nNous avons trouvé une villa correspondant à votre critère de loyer maximum de 1 000 000 F CFA :\n\n- **Référence** : SK-028  \n- **Quartier** : Yoff  \n- **Adresse** : Cité YF-12, Yoff  \n- **Loyer** : 900 000 F CFA par mois  \n- **Nombre de pièces** : 5  \n\nCette villa est disponible à la location. N’hésitez pas à nous préciser si vous souhaitez organiser une visite ou obtenir davantage d’informations.\n\nCordialement,  \nL’équipe Sama Kër Immobilier"
+    },
+    {
+      "id": "D06",
+      "texte": "Une chambre à Ouakam",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [
+        "SK-016"
+      ],
+      "biens_cites": [
+        "SK-016"
+      ],
+      "reponse": "Voici le bien correspondant à votre recherche :\n\n- **Référence** : SK-016  \n- **Quartier** : Ouakam  \n- **Adresse** : Rue OK-7, Ouakam  \n- **Loyer** : 75 000 F CFA par mois  \n- **Nombre de pièces** : 1 (chambre)  \n- **Meublé** : Oui  \n\nCe logement est actuellement disponible."
+    },
+    {
+      "id": "D07",
+      "texte": "Un F3 aux Almadies à moins de 500 000 F",
+      "reussi": true,
+      "detail": "ok",
+      "biens_attendus": [],
+      "biens_cites": [],
+      "reponse": "Bonjour,\n\nNous n’avons malheureusement aucun appartement de type F3 disponible dans le quartier des Almadies avec un loyer inférieur à 500 000 F CFA.\n\nSi vous le souhaitez, nous pouvons élargir votre recherche :\n- augmenter légèrement le budget,\n- envisager des quartiers voisins (Mermoz, Yoff, Liberté 6, Sacré‑Cœur, Ouakam, Point E, Ngor) où nous disposons plusieurs F3 à des loyers compris entre 230 000 F et 500 000 F,\n- ou bien réduire le nombre de pièces si cela vous convient.\n\nN’hésitez pas à nous préciser les critères que vous seriez prêt(e) à ajuster afin que nous puissions vous proposer des alternatives correspondant à vos attentes."
+    },
+    {
+      "id": "D08",
+      "texte": "Un F2 meublé au Plateau",
+      "reussi": false,
+      "detail": "plantage : RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m7wegbrke65v1gp0pthkqadb` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198719, Requested 2397. Please try again in 8m2.111999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}} ; manquant(s) : SK-020",
+      "biens_attendus": [
+        "SK-020"
+      ],
+      "biens_cites": [],
+      "reponse": ""
+    },
+    {
+      "id": "D09",
+      "texte": "Un appartement à Yoff",
+      "reussi": false,
+      "detail": "plantage : RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m7wegbrke65v1gp0pthkqadb` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198707, Requested 2190. Please try again in 6m27.504s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}} ; manquant(s) : SK-027",
+      "biens_attendus": [
+        "SK-027"
+      ],
+      "biens_cites": [],
+      "reponse": ""
+    },
+    {
+      "id": "D10",
+      "texte": "Un F3 à Sacré-Coeur pour 300 000 F maximum",
+      "reussi": false,
+      "detail": "plantage : RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m7wegbrke65v1gp0pthkqadb` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198695, Requested 2201. Please try again in 6m27.071999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}} ; manquant(s) : SK-021",
+      "biens_attendus": [
+        "SK-021"
+      ],
+      "biens_cites": [],
+      "reponse": ""
+    }
+  ]
+}

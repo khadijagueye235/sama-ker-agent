@@ -1,5 +1,6 @@
 mcp[cli]>=1.20,<2
 langgraph
+langgraph-checkpoint-sqlite
 langchain-mcp-adapters
 langchain-groq
 google-api-python-client

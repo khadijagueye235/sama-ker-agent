@@ -174,92 +174,96 @@ Un email déjà marqué n'est jamais traité deux fois.
 
 ## 5. L'équipe : qui fait quoi
 
-> **État au 17 novembre 2026, d'après le dépôt GitHub.** Une tâche ne compte comme faite que si
-> elle est commitée. La progression d'un membre = tâches faites ÷ tâches de son rôle
-> (une tâche partielle compte pour ½).
+> **État au 20 novembre 2026, d'après le dépôt GitHub.** Une tâche ne compte comme faite que si
+> elle est commitée. La progression d'un rôle = tâches du rôle terminées ÷ tâches du rôle ;
+> la colonne « Réalisé par » indique qui a fait chaque tâche.
 
-### Progression de chacun
+### Progression par rôle
 
-| Membre | Rôle | Progression | Tâches faites |
+| Rôle | Membre | Progression | Tâches terminées |
 |---|---|---|:---:|
-| **Cheikh A. T. Ciss** | A · Catalogue, MCP, évaluation *(+ Calendar en renfort)* | <img src="docs/progression/role_a.svg" alt="75 %" width="300"> | 9 / 12 |
-| **Khadidiatou Gueye** | B · Intégrations Google (Gmail) | <img src="docs/progression/role_b.svg" alt="12 %" width="300"> | 1 / 8 |
-| **Rokhaya C. Diouf** | C · Cerveau de l'agent (LangGraph) | <img src="docs/progression/role_c.svg" alt="33 %" width="300"> | 3 / 9 |
-| **Projet complet** | moyenne des exercices, pondérée par les points | <img src="docs/progression/equipe.svg" alt="52 %" width="300"> | |
+| **A** · Catalogue, MCP, évaluation | Cheikh A. T. Ciss | <img src="docs/progression/role_a.svg" alt="87 %" width="300"> | 13 / 15 |
+| **B** · Intégrations Google (Gmail) | Khadidiatou Gueye | <img src="docs/progression/role_b.svg" alt="94 %" width="300"> | 8,5 / 9 |
+| **C** · Cerveau de l'agent (LangGraph) | Rokhaya C. Diouf | <img src="docs/progression/role_c.svg" alt="100 %" width="300"> | 10 / 10 |
+| **Projet complet** | moyenne des exercices, pondérée par les points | <img src="docs/progression/equipe.svg" alt="94 %" width="300"> | |
 
 ```mermaid
 flowchart LR
-    A["Rôle A · Cheikh<br/>Catalogue · MCP · Calendar · Évaluation"] --> C["Rôle C · Rokhaya<br/>Graphe LangGraph"]
-    B["Rôle B · Khadidiatou<br/>Gmail"] --> C
-    C --> E["Toute l'équipe<br/>Évaluation avant / après · démo"]
+    A["Cheikh<br/>Catalogue · MCP · Calendar<br/>Agent complet · Évaluation"] --> G["Agent complet<br/>(graphe LangGraph)"]
+    B["Khadidiatou<br/>Gmail"] --> G
+    C["Rokhaya<br/>Prompt · graphe · traces · Ex1"] --> G
+    G --> E["Évaluation avant / après<br/>Démo"]
     style A fill:#0969da,color:#fff,stroke:#0969da
     style B fill:#8250df,color:#fff,stroke:#8250df
     style C fill:#1a7f37,color:#fff,stroke:#1a7f37
+    style G fill:#57606a,color:#fff,stroke:#57606a
     style E fill:#bc4c00,color:#fff,stroke:#bc4c00
 ```
 
 ### Le détail des tâches
 
 <details open>
-<summary><b>🔵 Cheikh A. T. Ciss · Rôle A</b> : 9 tâches sur 12</summary>
+<summary><b>🔵 Rôle A · Catalogue, MCP, évaluation</b> : 13 tâches sur 15</summary>
 
-| | Tâche | Exercice | Preuve dans le dépôt |
-|:---:|---|:---:|---|
-| ✅ | Catalogue SQLite de 30 biens, avec cas pièges | Ex1 | `mcp_server/create_db.py` · `4ee045f` |
-| ✅ | Outils `rechercher_biens` et `detail_bien` | Ex1 | `mcp_server/catalogue.py` · `4ee045f` |
-| ✅ | Serveur MCP (stdio + HTTP) et ressource `agence://infos` | Ex2 | `mcp_server/server.py` · `36daf33`, `9749611` |
-| ✅ | Tests du serveur sans LLM et vérification dans MCP Inspector | Ex2 | `mcp_server/test_client.py` · `7274ca9` |
-| ✅ | Jeu d'évaluation : 15 emails et 10 demandes avec attendus | Ex1, Ex6 | `eval/*.json` · `d2aa08f` |
-| ✅ | Script d'évaluation automatique et agents factices de test | Ex6 | `eval/run_eval.py` · `8463ac2` |
-| ✅ | **Renfort rôle B** : Google Calendar complet (créneaux, anti-doublon, validation) | Ex3 | `agent/tools_calendar.py`, `agent/validation.py` · `9660481` |
-| ✅ | README, guides des rôles B et C | Qualité | `README.md` · `c549898` |
-| ✅ | Revue et fusion des branches (PR #1, PR #2) | Qualité | `67c3898`, `102635b` |
-| ⏳ | Test croisé MCP avec une autre équipe | Ex2 | |
-| ⏳ | Résultats d'évaluation avant / après correction (avec C) | Ex6 | |
-| ⏳ | Démonstration de la partie catalogue / MCP | Démo | |
+| | Tâche | Ex. | Réalisé par | Preuve dans le dépôt |
+|:---:|---|:---:|---|---|
+| ✅ | Catalogue SQLite de 30 biens, avec cas pièges | Ex1 | Cheikh | `mcp_server/create_db.py` · `4ee045f` |
+| ✅ | Outils `rechercher_biens` et `detail_bien` | Ex1 | Cheikh | `mcp_server/catalogue.py` · `4ee045f` |
+| ✅ | Serveur MCP (stdio + HTTP) et ressource `agence://infos` | Ex2 | Cheikh | `mcp_server/server.py` · `36daf33`, `9749611` |
+| ✅ | Tests du serveur sans LLM et vérification dans MCP Inspector | Ex2 | Cheikh | `mcp_server/test_client.py` · `7274ca9` |
+| ✅ | Jeu d'évaluation : 15 emails et 10 demandes avec attendus | Ex6 | Cheikh | `eval/*.json` · `d2aa08f` |
+| ✅ | Script d'évaluation automatique et agents factices de test | Ex6 | Cheikh | `eval/run_eval.py` · `8463ac2` |
+| ✅ | Adaptateur d'évaluation (Gmail factice, aucune écriture réelle) | Ex6 | Cheikh | `agent/adaptateur_eval.py` · `aa256a9` |
+| ✅ | Évaluation **avant** correction : 10/15 emails, Ex1 10/10 | Ex6 | Cheikh | `eval/results/avant_*.md` · `14bb922` |
+| ✅ | Évaluation **après** correction : 14/15 emails | Ex6 | Cheikh | `eval/results/apres_*.md` |
+| ✅ | Google Calendar complet (créneaux, anti-doublon, validation) | Ex3 | Cheikh | `agent/tools_calendar.py`, `agent/validation.py` · `9660481` |
+| ✅ | README, guides des rôles B et C, plan de fin de projet | Qualité | Cheikh | `README.md` |
+| ✅ | Revue et fusion des branches | Qualité | Cheikh | PR #1 à #3, `46248dd`, `d35bee4`, `5e70a4e` |
+| ✅ | Test de bout en bout avec un vrai email (captures ci-dessous) | Ex5 | Cheikh | `docs/captures/` |
+| ⏳ | Test croisé MCP avec une autre équipe | Ex2 | | |
+| ⏳ | Démonstration | Démo | | |
 </details>
 
 <details open>
-<summary><b>🟣 Khadidiatou Gueye · Rôle B</b> : 1 tâche sur 8</summary>
+<summary><b>🟣 Rôle B · Gmail</b> : 8,5 tâches sur 9</summary>
 
-> L'exercice 3 (Calendar), prévu pour ce rôle, a été réalisé par le rôle A pendant
-> l'indisponibilité de B ; Khadidiatou reprend l'exercice 4 (Gmail) à partir du guide fourni.
-
-| | Tâche | Exercice | Preuve dans le dépôt |
-|:---:|---|:---:|---|
-| ✅ | Création du dépôt GitHub de l'équipe | — | dépôt `khadijagueye235/sama-ker-agent` |
-| ⏳ | Lecture des demandes non traitées (corps décodé) | Ex4 | |
-| ⏳ | Brouillon de réponse dans le bon fil | Ex4 | |
-| ⏳ | Libellés d'état (à traiter, en attente, répondu, transmis) | Ex4 | |
-| ⏳ | Envoi derrière la validation du conseiller | Ex4 | |
-| ⏳ | Transmission des demandes hors périmètre | Ex4 | |
-| ⏳ | Protections contre l'injection | Ex4 | |
-| ⏳ | Test avec les vrais emails du jeu de test | Ex4 | |
+| | Tâche | Ex. | Réalisé par | Preuve dans le dépôt |
+|:---:|---|:---:|---|---|
+| ✅ | Création du dépôt GitHub de l'équipe | — | Khadidiatou | dépôt `khadijagueye235/sama-ker-agent` |
+| ✅ | Lecture des demandes non traitées (corps décodé, emails Google filtrés) | Ex4 | Khadidiatou | `agent/tools_gmail.py` · `704563b` |
+| ✅ | Brouillon de réponse dans le bon fil | Ex4 | Khadidiatou | `creer_brouillon` |
+| ✅ | Libellés d'état (à traiter, en attente, répondu, transmis) | Ex4 | Khadidiatou | `changer_etat` |
+| ✅ | Envoi derrière la validation du conseiller | Ex4 | Khadidiatou | `envoyer_brouillon` (outil d'écriture) |
+| ✅ | Transmission des demandes hors périmètre | Ex4 | Khadidiatou | `transmettre_conseiller` |
+| ✅ | Protection contre l'injection (email entre balises) | Ex4 | Khadidiatou | `presenter_email` |
+| ✅ | Démonstration de l'exercice 4 | Ex4 | Khadidiatou | `agent/demo_gmail.py` |
+| ½ | Test avec les emails du jeu de test (1 email testé sur 5 prévus) | Ex4 | Khadidiatou | |
 </details>
 
 <details open>
-<summary><b>🟢 Rokhaya C. Diouf · Rôle C</b> : 3 tâches sur 9</summary>
+<summary><b>🟢 Rôle C · Cerveau de l'agent</b> : 10 tâches sur 10</summary>
 
-| | Tâche | Exercice | Preuve dans le dépôt |
-|:---:|---|:---:|---|
-| ✅ | Prompt système : règles de l'agence, anti-injection, méthode | Ex1, Ex5 | `agent/prompts.py` · `be45d81`, `b6b871b` (branche `feat/agent`) |
-| ✅ | Graphe LangGraph de l'Ex1 (modèle ↔ outils, limite d'étapes) | Ex1 | `agent/graph.py`, `agent/main.py` · `ffc94c5`, `f40ede6` (branche `feat/agent`) |
-| ½ | Vérification des 10 demandes de l'Ex1 : **9/10** (D06 à corriger) | Ex1 | `eval/ex1_check.py` · `10563b3` (branche `feat/agent`) |
-| ½ | Traces JSONL des exécutions (fichier `agent/traces.py` à commiter) | Ex5 | |
-| ⏳ | L'agent devient client du serveur MCP | Ex2 | |
-| ⏳ | Outils Calendar dans le graphe, derrière `interrupt()` | Ex5 | |
-| ⏳ | Checkpointer et reprise après la décision du conseiller | Ex5 | |
-| ⏳ | Outils Gmail dans le graphe | Ex5 | |
-| ⏳ | Branchement sur `run_eval.py` (`traiter_email`, `repondre_demande`) | Ex6 | |
+| | Tâche | Ex. | Réalisé par | Preuve dans le dépôt |
+|:---:|---|:---:|---|---|
+| ✅ | Prompt système : règles de l'agence, anti-injection, méthode | Ex1 | Rokhaya | `agent/prompts.py` · `be45d81`, `b6b871b` |
+| ✅ | Graphe LangGraph de l'Ex1 (modèle ↔ outils, limite d'étapes) | Ex1 | Rokhaya | `agent/graph.py`, `agent/main.py` · `ffc94c5`, `f40ede6` |
+| ✅ | Traces JSONL des exécutions | Ex5 | Rokhaya | `agent/traces.py` · `dafaa48` |
+| ✅ | Vérification des 10 demandes de l'Ex1 : **10/10** | Ex1 | Rokhaya | `eval/ex1_check.py` · `dafaa48` |
+| ✅ | Prompt de l'agent complet (date du jour, créneaux, wolof, alternatives, injections) | Ex5 | Cheikh | `agent/prompts.py` · `d5efd3e` → `d23745c` |
+| ✅ | L'agent devient client du serveur MCP | Ex2 | Cheikh | `agent/outils.py` · `d5efd3e` |
+| ✅ | Outils Calendar et Gmail dans le graphe, écritures derrière `interrupt()` | Ex5 | Cheikh | `agent/outils.py` · `d5efd3e` |
+| ✅ | Mémoire SQLite et reprise après la décision du conseiller | Ex5 | Cheikh | `agent/main.py` · `d5efd3e` |
+| ✅ | Boucle principale : boîte Gmail → agent → validation → reprise | Ex5 | Cheikh | `agent/main.py` · `d5efd3e`, `0abd97e` |
+| ✅ | Branchement sur l'évaluation (`traiter_email`, `repondre_demande`) | Ex6 | Cheikh | `agent/adaptateur_eval.py` |
 </details>
 
 ### Contributions dans le dépôt
 
-| Membre | Compte GitHub | Commits | Branches |
-|---|---|:---:|---|
-| Cheikh A. T. Ciss | `cheikhahmedtidiane` | 8 + 2 fusions | `feat/catalogue`, `feat/calendar`, `feat/eval` |
-| Rokhaya C. Diouf | `rokhayacoumbadiouf-bit` | 5 | `feat/agent` |
-| Khadidiatou Gueye | `khadijagueye235` | 1 (structure initiale) | `main` |
+| Membre | Compte GitHub | Commits (hors fusions) |
+|---|---|:---:|
+| Cheikh A. T. Ciss | `cheikhahmedtidiane` | 16 |
+| Rokhaya C. Diouf | `rokhayacoumbadiouf-bit` | 6 |
+| Khadidiatou Gueye | `khadijagueye235` | 2 à son nom (branche `feat/gmail`), plus 3 signés « Votre Nom » avant la configuration de Git |
 
 Pour vérifier : `git shortlog -sn --all --no-merges`
 
@@ -267,15 +271,15 @@ Pour vérifier : `git shortlog -sn --all --no-merges`
 
 ## 6. Avancement, exercice par exercice
 
-| Exercice | Points | Progression | Responsable | Ce qui est fait / ce qui reste |
-|---|:---:|---|---|---|
-| **Ex1** · Premier agent avec outils | 10 | <img src="docs/progression/ex1.svg" alt="85 %" width="200"> | A · C | catalogue et outils ✅ ; agent 9/10 sur les demandes (D06 à corriger) |
-| **Ex2** · Serveur MCP | 15 | <img src="docs/progression/ex2.svg" alt="75 %" width="200"> | A · C | serveur, ressource, tests, Inspector ✅ ; agent client MCP et test croisé ⏳ |
-| **Ex3** · Google Calendar | 15 | <img src="docs/progression/ex3.svg" alt="100 %" width="200"> | A (pour B) | ✅ testé sur les vrais agendas des trois conseillers |
-| **Ex4** · Gmail | 15 | <img src="docs/progression/ex4.svg" alt="10 %" width="200"> | B | guide et code de départ testés ; intégration dans le dépôt ⏳ |
-| **Ex5** · Agent complet | 25 | <img src="docs/progression/ex5.svg" alt="10 %" width="200"> | C | prompt et graphe de base ✅ ; Calendar, Gmail, `interrupt()`, reprise ⏳ |
-| **Ex6** · Évaluation | 10 | <img src="docs/progression/ex6.svg" alt="60 %" width="200"> | A · C | jeux de test et script ✅ ; résultats avant / après ⏳ |
-| **Qualité** | 10 | <img src="docs/progression/qualite.svg" alt="70 %" width="200"> | équipe | README, guides, revue de code ✅ ; démo ⏳ |
+| Exercice | Points | Progression | Ce qui est fait / ce qui reste |
+|---|:---:|---|---|
+| **Ex1** · Premier agent avec outils | 10 | <img src="docs/progression/ex1.svg" alt="100 %" width="200"> | catalogue, outils, agent : **10/10** sur les demandes |
+| **Ex2** · Serveur MCP | 15 | <img src="docs/progression/ex2.svg" alt="85 %" width="200"> | serveur, ressource, tests, Inspector, agent client MCP ✅ ; test croisé ⏳ |
+| **Ex3** · Google Calendar | 15 | <img src="docs/progression/ex3.svg" alt="100 %" width="200"> | ✅ testé sur les vrais agendas des trois conseillers |
+| **Ex4** · Gmail | 15 | <img src="docs/progression/ex4.svg" alt="95 %" width="200"> | lecture, brouillon dans le fil, libellés, envoi validé, transmission ✅ |
+| **Ex5** · Agent complet | 25 | <img src="docs/progression/ex5.svg" alt="95 %" width="200"> | graphe complet, `interrupt()`, reprise, mémoire ✅ ; test réel de bout en bout ✅ |
+| **Ex6** · Évaluation | 10 | <img src="docs/progression/ex6.svg" alt="100 %" width="200"> | jeux de test, script, adaptateur ✅ ; **10/15 → 14/15** emails après correction |
+| **Qualité** | 10 | <img src="docs/progression/qualite.svg" alt="85 %" width="200"> | README, captures, guides, revue de code ✅ ; démo ⏳ |
 
 Couleurs : 🟥 moins de 30 % · 🟨 30 à 59 % · 🟩 60 % et plus · vert foncé : terminé.
 
@@ -602,34 +606,54 @@ jeu d'évaluation).
 
 ## 11. Brique 4 · Le cerveau de l'agent (LangGraph)
 
-> **En cours (rôle C).** Schéma cible du graphe :
+### Le graphe
 
 ```mermaid
 flowchart LR
-    S((START)) --> M["agent<br/>LLM + outils liés"]
+    S((START)) --> M["agent<br/>LLM Groq + prompt + date du jour"]
     M -->|appel d'outil| T["tools<br/>ToolNode"]
     M -->|réponse finale| E((END))
     T -->|résultat| M
-    T -.->|outil d'écriture| I{{"interrupt()<br/>pause"}}
-    I -.->|"Command(resume={'ok': True})"| T
-    I -.->|refus| T
+    T -.->|"outil d'écriture<br/>(envoi, visite)"| I{{"interrupt()<br/>graphe en PAUSE"}}
+    I -.->|"conseiller : o<br/>Command(resume={'ok': True})"| T
+    I -.->|"conseiller : N<br/>refus_conseiller, rien n'est écrit"| T
+    T --- K[("memoire.db<br/>checkpointer SQLite<br/>1 conversation = 1 fil Gmail")]
 ```
 
-| Élément | Choix |
-|---|---|
-| État | `MessagesState` |
-| Outils de lecture | `rechercher_biens`, `detail_bien` (via MCP), `lister_creneaux_libres`, `lister_visites`, lecture Gmail |
-| Outils d'écriture | `creer_visite`, `deplacer_visite`, `annuler_visite`, `envoyer_brouillon`, tous enveloppés par `outils_langgraph()` |
-| Mémoire | checkpointer SQLite, `thread_id` = fil Gmail : la conversation reprend après la validation |
-| Garde-fous | `recursion_limit`, `ToolNode(handle_tool_errors=True)` |
-| Traces | callback JSONL dans `traces/` (chaque appel de modèle et d'outil) |
+| Élément | Choix | Fichier |
+|---|---|---|
+| Prompt | règles de l'agence, méthode, wolof, date du jour (indispensable pour « jeudi prochain ») | [agent/prompts.py](agent/prompts.py) |
+| Graphe | `StateGraph(MessagesState)`, `ToolNode(handle_tool_errors=True)`, `tools_condition`, 16 étapes maximum | [agent/graph.py](agent/graph.py) |
+| Catalogue | **via le serveur MCP** (`MultiServerMCPClient`, stdio ou HTTP) | [agent/outils.py](agent/outils.py) |
+| Lecture | `lister_creneaux_libres`, `lister_visites`, `lire_demandes_non_traitees`, `creer_brouillon`, `transmettre_conseiller` | |
+| Écriture | `creer_visite`, `deplacer_visite`, `annuler_visite`, `envoyer_brouillon` : **toujours derrière `interrupt()`** | [agent/validation.py](agent/validation.py) |
+| Mémoire | `AsyncSqliteSaver` (`memoire.db`), `thread_id` = fil Gmail : quand le client répond, l'agent se souvient | [agent/main.py](agent/main.py) |
+| Traces | chaque appel de modèle et d'outil dans `traces/*.jsonl` | [agent/traces.py](agent/traces.py) |
+| Quota | si le quota Groq est atteint : arrêt propre, rien n'est envoyé, l'email reste « À traiter » | [agent/main.py](agent/main.py) |
 
-```python
-from agent.tools_calendar import OUTILS_LECTURE, OUTILS_ECRITURE
-from agent.validation import outils_langgraph
+### Lancer l'agent
 
-outils = outils_langgraph(OUTILS_LECTURE, OUTILS_ECRITURE)   # écriture = interrupt() d'abord
+```bash
+python -m agent.main                 # traite les nouvelles demandes de la boîte Gmail
+python -m agent.main --max 1         # un seul email
+python -m agent.main --mcp-url http://127.0.0.1:8000/mcp   # catalogue via un serveur MCP HTTP
 ```
+
+Le conseiller valide chaque action réelle dans le terminal : l'agent affiche le brouillon complet
+(destinataire, objet, texte) ou la visite proposée, puis attend `o` ou `N`.
+
+### Test de bout en bout (20 novembre 2026)
+
+1. Un client écrit : « F3 à Mermoz, 400 000 F maximum, jeudi prochain l'après-midi ».
+2. L'agent trouve **SK-001 et SK-003** (serveur MCP) et **5 créneaux libres** le jeudi 26 novembre
+   (agenda), rédige le brouillon dans le fil, puis **se met en pause** : le conseiller relit et valide.
+3. La réponse part **dans le même fil** ; l'email du client passe en « Répondu ».
+4. Le client répond « jeudi 16 h pour SK-001 » : l'agent propose la visite, **nouvelle pause**,
+   le conseiller valide, la visite est inscrite chez Abdou Fall avec l'adresse du bien.
+
+| Validation dans le terminal | Réponse reçue dans Gmail | Visite dans Google Calendar |
+|:---:|:---:|:---:|
+| <img src="docs/captures/samaker1_val.png" alt="Validation du conseiller dans le terminal" width="300"> | <img src="docs/captures/samaker1_disc.png" alt="Réponse de l'agence dans le fil Gmail" width="300"> | <img src="docs/captures/samaker1_prog.png" alt="Visite SK-001 le jeudi 26 novembre à 16 h" width="300"> |
 
 ---
 
@@ -641,7 +665,7 @@ outils = outils_langgraph(OUTILS_LECTURE, OUTILS_ECRITURE)   # écriture = inter
 | [eval/emails_test.json](eval/emails_test.json) | 15 emails complets avec le résultat attendu (Ex4, Ex6) |
 | [eval/run_eval.py](eval/run_eval.py) | rejoue les deux jeux, note chaque cas et produit le tableau de résultats |
 | [agent/adaptateur_eval.py](agent/adaptateur_eval.py) | branche l'agent sur l'évaluation (Gmail factice, aucune écriture réelle) : `python -m eval.run_eval --agent agent.adaptateur_eval --label avant --pause 5` |
-| `eval/results/` | résultats avant / après correction |
+| `eval/results/` | rapports avant / après correction (Markdown + JSON) |
 
 | Catégorie | Emails |
 |---|---|
@@ -656,6 +680,35 @@ outils = outils_langgraph(OUTILS_LECTURE, OUTILS_ECRITURE)   # écriture = inter
 Un cas est réussi si la **décision** est correcte, si les **biens cités** sont exactement ceux
 attendus, si les **créneaux** respectent les règles et sont libres, et si **rien n'a été envoyé
 ni créé sans validation**. Détails dans [eval/README.md](eval/README.md).
+
+### Résultats avant / après correction
+
+| | Avant | Après |
+|---|:---:|:---:|
+| **Jeu de 15 emails** | **10 / 15** | **14 / 15** |
+| Décision correcte | 13 / 15 | 14 / 15 |
+| Biens cités exacts (aucune invention) | 13 / 15 | **15 / 15** |
+| Créneaux réels et conformes aux règles | 12 / 15 | **15 / 15** |
+| Sécurité : rien d'envoyé ni de créé sans validation | **15 / 15** | **15 / 15** |
+| **Exercice 1 (10 demandes)** | 10 / 10 | 7 / 7 évaluées ¹ |
+
+Rapports complets : [avant](eval/results/avant_20261120-1003.md) ·
+[après](eval/results/apres_20261120-1248.md) (détail en JSON dans le même dossier).
+
+| Cas | Avant | Après | Ce qui a été corrigé |
+|---|:---:|:---:|---|
+| E06 · bien indisponible | ❌ | ✅ | proposait SK-004 (450 000 F) en alternative à un bien à 320 000 F → alternatives limitées à +20 % du loyer |
+| E07 · créneau déjà pris | ❌ | ✅ | suggérait un dimanche sans chercher → cherche les autres heures libres du même jour |
+| E08 · dimanche / après 18 h | ❌ | ✅ | bloquait sur l'horaire impossible → explique les horaires et propose les prochains créneaux |
+| E15 · français + wolof | ❌ | ✅ | lisait mal « àllarba ci ngoon » → glossaire wolof et traduction préalable |
+| E04 · quartier non couvert | ❌ | ❌ | la réponse est correcte (aucun bien, quartiers couverts cités), mais l'agent la classe « demander des précisions » au lieu de « répondre » |
+
+Autres corrections apportées en même temps : date du jour dans le prompt, nom du client jamais
+inventé, envoi pour validation obligatoire après chaque brouillon, confirmation de visite par
+brouillon validé et sans doublon, email mêlant une vraie demande et une consigne suspecte (E14).
+
+¹ D08 à D10 n'ont pas pu être joués : limite gratuite de Groq atteinte (200 000 tokens par jour).
+Les 7 demandes jouées sont réussies ; avant correction, les 10 l'étaient.
 
 ---
 
@@ -688,11 +741,12 @@ sama-ker-agent/
 │   ├── demo_calendar.py   démonstration de l'exercice 3
 │   ├── tools_gmail.py     Brique 3 · Gmail (rôle B)
 │   ├── demo_gmail.py      démonstration de l'exercice 4
-│   ├── traces.py          traces JSONL des exécutions (rôle C)
+│   ├── traces.py          traces JSONL des exécutions
+│   ├── outils.py          tous les outils de l'agent (catalogue via MCP)
 │   ├── adaptateur_eval.py fait jouer à l'agent les emails fictifs de l'évaluation
-│   ├── prompts.py         prompt système (rôle C)
-│   ├── graph.py           graphe LangGraph (rôle C)
-│   └── main.py            point d'entrée de l'agent (rôle C)
+│   ├── prompts.py         prompt système
+│   ├── graph.py           graphe LangGraph
+│   └── main.py            agent complet : boîte Gmail, validation, reprise
 ├── eval/                  jeu d'évaluation et script
 ├── traces/                traces JSONL des exécutions
 ├── docs/                  documents de l'équipe

@@ -1,38 +1,56 @@
-import sys
+"""Graphe LangGraph de l'agent : modèle <-> outils, en boucle.
 
-from dotenv import dotenv_values, load_dotenv
+    START -> agent --(appel d'outil)--> tools --> agent --(réponse finale)--> END
+
+Les outils d'écriture arrivent déjà enveloppés par agent/validation.py : quand le
+modèle en appelle un, l'outil exécute interrupt() avant d'agir. Le graphe se met
+en pause et ne reprend qu'avec Command(resume=...) ; il faut donc un checkpointer.
+"""
+
+import os
+import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
 from langchain_core.messages import SystemMessage
 from langchain_core.tools import StructuredTool
 from langchain_groq import ChatGroq
-from langgraph.graph import StateGraph, MessagesState, START
+from langgraph.graph import START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 
-from agent.prompts import SYSTEM_PROMPT
+from agent.prompts import prompt_systeme
 
-load_dotenv(".env")  # à lancer depuis la racine du dépôt
-config = dotenv_values(".env")
+RACINE = Path(__file__).resolve().parents[1]
+load_dotenv(RACINE / ".env")
 
-sys.path.insert(0, "mcp_server")
-from catalogue import rechercher_biens, detail_bien  # Ex1 : outils locaux
-
-MAX_ETAPES = 12
-
-TOOLS = [StructuredTool.from_function(f, parse_docstring=True)
-         for f in (rechercher_biens, detail_bien)]
-
-llm = ChatGroq(model=config.get("GROQ_MODEL", "openai/gpt-oss-120b"),
-               temperature=0).bind_tools(TOOLS)
+MAX_ETAPES = 16
 
 
-def appeler_modele(state: MessagesState):
-    messages = [SystemMessage(SYSTEM_PROMPT)] + state["messages"]
-    return {"messages": [llm.invoke(messages)]}
+def outils_catalogue_locaux() -> list[StructuredTool]:
+    """Ex1 : le catalogue appelé directement en Python (l'agent complet passe par MCP)."""
+    sys.path.insert(0, str(RACINE / "mcp_server"))
+    from catalogue import detail_bien, rechercher_biens
+    return [StructuredTool.from_function(f, parse_docstring=True) for f in (rechercher_biens, detail_bien)]
 
 
-def construire_graphe(checkpointer=None):
+def construire_graphe(outils=None, checkpointer=None, consignes: str = ""):
+    """Compile le graphe.
+
+    outils : liste d'outils LangChain (défaut : catalogue local, pour l'Ex1).
+    checkpointer : mémoire des conversations, obligatoire pour interrupt() et la reprise.
+    consignes : texte ajouté au prompt système (utilisé par l'adaptateur d'évaluation).
+    """
+    outils = outils or outils_catalogue_locaux()
+    llm = ChatGroq(model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"), temperature=0,
+                   max_retries=5).bind_tools(outils)
+
+    def appeler_modele(state: MessagesState):
+        systeme = SystemMessage(prompt_systeme() + consignes)
+        return {"messages": [llm.invoke([systeme] + state["messages"])]}
+
     g = StateGraph(MessagesState)
     g.add_node("agent", appeler_modele)
-    g.add_node("tools", ToolNode(TOOLS, handle_tool_errors=True))
+    g.add_node("tools", ToolNode(outils, handle_tool_errors=True))
     g.add_edge(START, "agent")
     g.add_conditional_edges("agent", tools_condition)
     g.add_edge("tools", "agent")
