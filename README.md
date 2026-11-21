@@ -642,6 +642,26 @@ python -m agent.main --mcp-url http://127.0.0.1:8000/mcp   # catalogue via un se
 Le conseiller valide chaque action réelle dans le terminal : l'agent affiche le brouillon complet
 (destinataire, objet, texte) ou la visite proposée, puis attend `o` ou `N`.
 
+### Interface conseiller (Streamlit)
+
+```bash
+streamlit run interface/app.py       # ouvre http://localhost:8501
+```
+
+Le **même agent** (même graphe, mêmes outils, même mémoire), avec une page web en mode sombre :
+
+| Onglet | Contenu |
+|---|---|
+| 📥 Demandes | relever la boîte Gmail, traiter un email, **valider ou refuser** l'action proposée (aperçu du brouillon, détails de la visite), voir les étapes suivies par l'agent |
+| 📅 Agenda | les visites des 14 prochains jours (Google Calendar) |
+| 🏠 Catalogue | question directe à l'agent (exercice 1) et liste des biens disponibles |
+| 📊 Évaluation | scores avant / après et résultat de chaque cas |
+
+Pourquoi une page web suffit : quand l'agent veut agir, le graphe se met en pause (`interrupt`) et
+son état est enregistré dans `memoire.db`. Le clic « Valider » ou « Refuser » reprend le graphe avec
+`Command(resume=...)`, exactement comme la réponse `o/N` dans le terminal. L'interface n'affiche
+aucune adresse email (seulement les noms) et aucune information de configuration.
+
 ### Test de bout en bout (20 novembre 2026)
 
 1. Un client écrit : « F3 à Mermoz, 400 000 F maximum, jeudi prochain l'après-midi ».
@@ -747,6 +767,9 @@ sama-ker-agent/
 │   ├── prompts.py         prompt système
 │   ├── graph.py           graphe LangGraph
 │   └── main.py            agent complet : boîte Gmail, validation, reprise
+├── interface/
+│   └── app.py             interface conseiller (Streamlit, mode sombre)
+├── .streamlit/config.toml thème de l'interface
 ├── eval/                  jeu d'évaluation et script
 ├── traces/                traces JSONL des exécutions
 ├── docs/                  documents de l'équipe
