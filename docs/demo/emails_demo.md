@@ -14,6 +14,12 @@ Envoie-les **un par un**, au moment indiqué, pas tous d'avance : `python -m age
 - [ ] Ouvrir à l'avance : un terminal dans le projet (venv activé), Gmail du compte de test, Google Calendar du compte de test, le README sur GitHub.
 - [ ] Plan B : les captures de `docs/captures/` et la vidéo enregistrée la veille.
 
+### Leçons de la répétition du 20-21/11
+- **La boîte de réception doit être vide** : l'agent traite TOUT message de la boîte qui n'a pas de libellé « traité ». Archiver les vieux fils des essais précédents (ils seraient repris).
+- Lancer la démo dans un **terminal Windows séparé**, venv activé (`.venv\Scripts\Activate.ps1`). Ne jamais fermer VS Code ni le terminal pendant une pause « validez-vous ? » : l'email resterait « En attente » et il faudrait envoyer le brouillon à la main.
+- Email B : utiliser le **texte complet** (bien ET heure). Avec seulement l'heure, l'agent redemande le bien (comportement correct, mais un échange de plus).
+- Après un refus (email D), supprimer le brouillon refusé avant de rejouer.
+
 ---
 
 ## Étape 2 · Catalogue (Ex1)
