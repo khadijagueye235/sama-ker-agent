@@ -10,15 +10,15 @@ DOSSIER = Path(__file__).resolve().parent
 
 # Une couleur par membre de l'équipe
 MEMBRES = {
-    "role_a": ("Cheikh A. T. Ciss", 87, "#0969da"),
-    "role_b": ("Khadidiatou Gueye", 94, "#8250df"),
+    "role_a": ("Cheikh A. T. Ciss", 94, "#0969da"),
+    "role_b": ("Khadidiatou Gueye", 100, "#8250df"),
     "role_c": ("Rokhaya C. Diouf", 100, "#1a7f37"),
-    "equipe": ("Projet complet", 94, "#bc4c00"),
+    "equipe": ("Projet complet", 99, "#bc4c00"),
 }
 
 # Exercices : couleur selon l'avancement
 EXERCICES = {
-    "ex1": 100, "ex2": 85, "ex3": 100, "ex4": 95, "ex5": 95, "ex6": 100, "qualite": 85,
+    "ex1": 100, "ex2": 95, "ex3": 100, "ex4": 100, "ex5": 100, "ex6": 100, "qualite": 95,
 }
 
 
