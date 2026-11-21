@@ -130,9 +130,9 @@ def outils_agent():
     return asyncio.run(charger_outils())
 
 
-async def _etape(thread_id: str, entree):
+async def _etape(outils: list, thread_id: str, entree):
     async with AsyncSqliteSaver.from_conn_string(str(MEMOIRE)) as memoire:
-        app = construire_graphe(outils_agent(), checkpointer=memoire)
+        app = construire_graphe(outils, checkpointer=memoire)
         config = {"configurable": {"thread_id": thread_id}, "recursion_limit": MAX_ETAPES,
                   "callbacks": [TraceurJSONL()]}
         return await app.ainvoke(entree, config)
@@ -163,7 +163,8 @@ def avancer(d: dict, entree) -> None:
     """Fait tourner le graphe jusqu'à la prochaine pause ou la fin, et range le résultat."""
     dossier = st.session_state.dossiers.setdefault(d["message_id"], {"etat": "nouveau"})
     try:
-        res = asyncio.run(_etape(d["thread_id"], entree))
+        outils = outils_agent()            # chargés AVANT la boucle asyncio du graphe
+        res = asyncio.run(_etape(outils, d["thread_id"], entree))
     except GraphRecursionError:
         gmail.transmettre_conseiller(d["message_id"], "demande trop complexe pour l'agent")
         dossier.update(etat="transmis", final="Demande trop complexe : transmise à un conseiller.")
