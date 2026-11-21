@@ -125,9 +125,10 @@ async def traiter_boite(max_emails: int = 5, url_mcp: str | None = None):
                 attente = re.search(r"try again in ([\dhms.]+)", str(e))
                 print("\nLimite Groq atteinte (" + ("requête trop longue" if e.status_code == 413 else
                       "quota de tokens") + ") : traitement interrompu.\n"
-                      "Seules les actions déjà validées par le conseiller ont été faites ; l'email garde "
-                      "le libellé « À traiter » et sera repris au prochain lancement"
-                      + (f" (réessayer dans {attente.group(1)})." if attente else "."))
+                      "Seules les actions déjà validées par le conseiller ont été faites. S'il est encore "
+                      "« À traiter », l'email sera repris au prochain lancement"
+                      + (f" (réessayer dans {attente.group(1)})" if attente else "")
+                      + " ; s'il est « En attente de validation », le brouillon est à reprendre dans Gmail.")
                 return
 
 
