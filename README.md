@@ -182,10 +182,10 @@ Un email déjà marqué n'est jamais traité deux fois.
 
 | Rôle | Membre | Progression | Tâches terminées |
 |---|---|---|:---:|
-| **A** · Catalogue, MCP, évaluation | Cheikh A. T. Ciss | <img src="docs/progression/role_a.svg" alt="87 %" width="300"> | 13 / 15 |
-| **B** · Intégrations Google (Gmail) | Khadidiatou Gueye | <img src="docs/progression/role_b.svg" alt="94 %" width="300"> | 8,5 / 9 |
+| **A** · Catalogue, MCP, évaluation | Cheikh A. T. Ciss | <img src="docs/progression/role_a.svg" alt="94 %" width="300"> | 17 / 18 |
+| **B** · Intégrations Google (Gmail) | Khadidiatou Gueye | <img src="docs/progression/role_b.svg" alt="100 %" width="300"> | 9 / 9 |
 | **C** · Cerveau de l'agent (LangGraph) | Rokhaya C. Diouf | <img src="docs/progression/role_c.svg" alt="100 %" width="300"> | 10 / 10 |
-| **Projet complet** | moyenne des exercices, pondérée par les points | <img src="docs/progression/equipe.svg" alt="94 %" width="300"> | |
+| **Projet complet** | moyenne des exercices, pondérée par les points | <img src="docs/progression/equipe.svg" alt="99 %" width="300"> | |
 
 ```mermaid
 flowchart LR
@@ -203,7 +203,7 @@ flowchart LR
 ### Le détail des tâches
 
 <details open>
-<summary><b>🔵 Rôle A · Catalogue, MCP, évaluation</b> : 13 tâches sur 15</summary>
+<summary><b>🔵 Rôle A · Catalogue, MCP, évaluation</b> : 17 tâches sur 18</summary>
 
 | | Tâche | Ex. | Réalisé par | Preuve dans le dépôt |
 |:---:|---|:---:|---|---|
@@ -220,12 +220,15 @@ flowchart LR
 | ✅ | README, guides des rôles B et C, plan de fin de projet | Qualité | Cheikh | `README.md` |
 | ✅ | Revue et fusion des branches | Qualité | Cheikh | PR #1 à #3, `46248dd`, `d35bee4`, `5e70a4e` |
 | ✅ | Test de bout en bout avec un vrai email (captures ci-dessous) | Ex5 | Cheikh | `docs/captures/` |
-| ⏳ | Test croisé MCP avec une autre équipe | Ex2 | | |
-| ⏳ | Démonstration | Démo | | |
+| ✅ | Test d'interopérabilité du serveur avec MCP Inspector (HTTP) | Ex2 | Cheikh | `docs/captures/inspector_*.jpg` |
+| ✅ | Interface conseiller Streamlit (validation par boutons, agenda, évaluation) | Qualité | Cheikh | `interface/app.py` |
+| ✅ | Répétition de la démo avec de vrais emails : 3 défauts trouvés et corrigés | Ex5 | Cheikh | `--max`, taille des requêtes, refus définitif |
+| ✅ | Évaluation de sécurité après corrections : **5/5** | Ex6 | Cheikh | `eval/results/securite_*.md` |
+| ✖ | Test croisé MCP avec une autre équipe : **non réalisé** (pas de créneau commun) | Ex2 | | remplacé par le test Inspector |
 </details>
 
 <details open>
-<summary><b>🟣 Rôle B · Gmail</b> : 8,5 tâches sur 9</summary>
+<summary><b>🟣 Rôle B · Gmail</b> : 9 tâches sur 9</summary>
 
 | | Tâche | Ex. | Réalisé par | Preuve dans le dépôt |
 |:---:|---|:---:|---|---|
@@ -237,7 +240,7 @@ flowchart LR
 | ✅ | Transmission des demandes hors périmètre | Ex4 | Khadidiatou | `transmettre_conseiller` |
 | ✅ | Protection contre l'injection (email entre balises) | Ex4 | Khadidiatou | `presenter_email` |
 | ✅ | Démonstration de l'exercice 4 | Ex4 | Khadidiatou | `agent/demo_gmail.py` |
-| ½ | Test avec les emails du jeu de test (1 email testé sur 5 prévus) | Ex4 | Khadidiatou | |
+| ✅ | Test avec de vrais emails (1 par Khadidiatou, puis 8 pendant la répétition de la démo) | Ex4 | Khadidiatou, Cheikh | `docs/demo/emails_demo.md` |
 </details>
 
 <details open>
@@ -261,7 +264,7 @@ flowchart LR
 
 | Membre | Compte GitHub | Commits (hors fusions) |
 |---|---|:---:|
-| Cheikh A. T. Ciss | `cheikhahmedtidiane` | 16 |
+| Cheikh A. T. Ciss | `cheikhahmedtidiane` | 28 |
 | Rokhaya C. Diouf | `rokhayacoumbadiouf-bit` | 6 |
 | Khadidiatou Gueye | `khadijagueye235` | 2 à son nom (branche `feat/gmail`), plus 3 signés « Votre Nom » avant la configuration de Git |
 
@@ -274,12 +277,12 @@ Pour vérifier : `git shortlog -sn --all --no-merges`
 | Exercice | Points | Progression | Ce qui est fait / ce qui reste |
 |---|:---:|---|---|
 | **Ex1** · Premier agent avec outils | 10 | <img src="docs/progression/ex1.svg" alt="100 %" width="200"> | catalogue, outils, agent : **10/10** sur les demandes |
-| **Ex2** · Serveur MCP | 15 | <img src="docs/progression/ex2.svg" alt="85 %" width="200"> | serveur, ressource, tests, Inspector, agent client MCP ✅ ; test croisé ⏳ |
+| **Ex2** · Serveur MCP | 15 | <img src="docs/progression/ex2.svg" alt="95 %" width="200"> | serveur, ressource, tests, agent client MCP, interopérabilité vérifiée avec MCP Inspector ✅ ; test croisé avec une autre équipe non réalisé |
 | **Ex3** · Google Calendar | 15 | <img src="docs/progression/ex3.svg" alt="100 %" width="200"> | ✅ testé sur les vrais agendas des trois conseillers |
-| **Ex4** · Gmail | 15 | <img src="docs/progression/ex4.svg" alt="95 %" width="200"> | lecture, brouillon dans le fil, libellés, envoi validé, transmission ✅ |
-| **Ex5** · Agent complet | 25 | <img src="docs/progression/ex5.svg" alt="95 %" width="200"> | graphe complet, `interrupt()`, reprise, mémoire ✅ ; test réel de bout en bout ✅ |
-| **Ex6** · Évaluation | 10 | <img src="docs/progression/ex6.svg" alt="100 %" width="200"> | jeux de test, script, adaptateur ✅ ; **10/15 → 14/15** emails après correction |
-| **Qualité** | 10 | <img src="docs/progression/qualite.svg" alt="85 %" width="200"> | README, captures, guides, revue de code ✅ ; démo ⏳ |
+| **Ex4** · Gmail | 15 | <img src="docs/progression/ex4.svg" alt="100 %" width="200"> | lecture, brouillon dans le fil, libellés, envoi validé, transmission ✅ ; testé avec de vrais emails ✅ |
+| **Ex5** · Agent complet | 25 | <img src="docs/progression/ex5.svg" alt="100 %" width="200"> | graphe complet, `interrupt()`, reprise, mémoire ✅ ; bout en bout dans le terminal et dans l'interface ✅ |
+| **Ex6** · Évaluation | 10 | <img src="docs/progression/ex6.svg" alt="100 %" width="200"> | jeux de test, script, adaptateur ✅ ; **10/15 → 14/15** emails, sécurité **5/5** après la répétition |
+| **Qualité** | 10 | <img src="docs/progression/qualite.svg" alt="95 %" width="200"> | README, captures, guides, revue de code, interface, démo répétée ✅ ; démo devant le correcteur à venir |
 
 Couleurs : 🟥 moins de 30 % · 🟨 30 à 59 % · 🟩 60 % et plus · vert foncé : terminé.
 
@@ -505,6 +508,25 @@ tools = await client.get_tools()   # -> rechercher_biens, detail_bien
 }
 ```
 
+### Test d'interopérabilité (21 novembre 2026)
+
+Le **test croisé avec une autre équipe n'a pas été réalisé** : nous n'avons pas trouvé de créneau
+commun avant le rendu. Pour vérifier quand même que le serveur fonctionne avec un client qui n'est
+pas le nôtre, nous l'avons testé avec **MCP Inspector** (v2.13, l'outil officiel du protocole) :
+
+1. serveur lancé en HTTP : `python mcp_server/server.py --transport http` ;
+2. Inspector connecté en `streamable-http` sur `http://127.0.0.1:8000/mcp` : il découvre le
+   serveur `sama-ker-catalogue` et ses **2 outils**, avec leurs annotations `READ-ONLY` et `IDEMPOTENT` ;
+3. `rechercher_biens` → 10 biens disponibles, triés par loyer ; `detail_bien("SK-001")` → la fiche
+   complète (Rue MZ-12, Mermoz, 350 000 F). Les deux appels `tools/call` répondent **OK**.
+
+| `rechercher_biens` depuis MCP Inspector | `detail_bien("SK-001")` depuis MCP Inspector |
+|:---:|:---:|
+| <img src="docs/captures/inspector_rechercher_biens.jpg" alt="Appel de rechercher_biens dans MCP Inspector" width="420"> | <img src="docs/captures/inspector_detail_bien.jpg" alt="Appel de detail_bien dans MCP Inspector" width="420"> |
+
+Un autre client MCP (celui d'une autre équipe, ou Claude Desktop) se branche de la même façon,
+avec l'URL HTTP ou la configuration JSON ci-dessus.
+
 ---
 
 ## 9. Brique 2 · Google Calendar
@@ -629,7 +651,7 @@ flowchart LR
 | Écriture | `creer_visite`, `deplacer_visite`, `annuler_visite`, `envoyer_brouillon` : **toujours derrière `interrupt()`** | [agent/validation.py](agent/validation.py) |
 | Mémoire | `AsyncSqliteSaver` (`memoire.db`), `thread_id` = fil Gmail : quand le client répond, l'agent se souvient | [agent/main.py](agent/main.py) |
 | Traces | chaque appel de modèle et d'outil dans `traces/*.jsonl` | [agent/traces.py](agent/traces.py) |
-| Quota | si le quota Groq est atteint : arrêt propre, rien n'est envoyé, l'email reste « À traiter » | [agent/main.py](agent/main.py) |
+| Limites Groq | historique compact (citations retirées, anciens résultats d'outils résumés) ; si la limite est atteinte malgré tout : arrêt propre, rien n'est envoyé sans validation | [agent/graph.py](agent/graph.py), [agent/main.py](agent/main.py) |
 
 ### Lancer l'agent
 
