@@ -3,6 +3,7 @@
   python -m agent.main                    # traite les nouvelles demandes de la boîte Gmail
   python -m agent.main --max 3            # au plus 3 emails
   python -m agent.main --mcp-url http://127.0.0.1:8000/mcp   # catalogue via un serveur MCP HTTP
+  python -m agent.main --mcp-url URL --question "F3 à Mermoz à moins de 400 000 F"   # question directe
 
 Pour chaque email :
   1. l'agent cherche les biens (serveur MCP) et les créneaux (agenda), rédige un brouillon ;
@@ -51,6 +52,26 @@ def demander(texte: str) -> str:
         return res["messages"][-1].content
     except GraphRecursionError:
         return "Demande trop complexe : elle est transmise à un conseiller."
+
+
+async def demander_via_mcp(texte: str, url_mcp: str | None = None) -> str:
+    """Question directe, avec le catalogue d'un serveur MCP (le nôtre ou celui d'une autre équipe).
+
+    Affiche chaque appel d'outil : on voit que les réponses viennent bien du serveur indiqué.
+    """
+    from agent.outils import client_mcp
+    outils = await client_mcp(url_mcp).get_tools()
+    print(f"Serveur MCP : {url_mcp or 'local (stdio)'} · outils : {', '.join(o.name for o in outils)}")
+    app = construire_graphe(outils, consignes=CONSIGNES_EX1)
+    try:
+        res = await app.ainvoke({"messages": [("user", texte)]},
+                                config={"recursion_limit": MAX_ETAPES, "callbacks": [TraceurJSONL()]})
+    except GraphRecursionError:
+        return "Demande trop complexe : elle est transmise à un conseiller."
+    for m in res["messages"]:
+        for appel in getattr(m, "tool_calls", None) or []:
+            print(f"  -> appel de {appel['name']}({appel['args']}) sur le serveur MCP")
+    return res["messages"][-1].content
 
 
 # --------------------------------------------------------------------------
@@ -136,5 +157,9 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description="Agent Sama Kër : traite les demandes de la boîte Gmail.")
     p.add_argument("--max", type=int, default=5, help="nombre maximal d'emails à traiter")
     p.add_argument("--mcp-url", help="URL d'un serveur MCP HTTP (défaut : serveur lancé en stdio)")
+    p.add_argument("--question", help="question directe sur le catalogue, sans Gmail (ex. test croisé MCP)")
     args = p.parse_args()
-    asyncio.run(traiter_boite(args.max, args.mcp_url))
+    if args.question:
+        print("\n" + asyncio.run(demander_via_mcp(args.question, args.mcp_url)))
+    else:
+        asyncio.run(traiter_boite(args.max, args.mcp_url))
